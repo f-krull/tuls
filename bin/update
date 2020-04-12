@@ -19,15 +19,18 @@ for service in $services; do
     mkdir -p ${BASEDIR}/var/log/${service}/
     # prepare status
     mkdir -p ${BASEDIR}/var/exit/${service}/
-    # write wrapper
+    # write parent wrapper
     cat > ${BASEDIR}/var/lib/${service} << EOI
+#!/usr/bin/env bash
+
+  nice $NICE ionice $IONICE ${BASEDIR}/var/lib/${service}_child
+EOI
+  # write child wrappter
+  cat > ${BASEDIR}/var/lib/${service}_child << EOI
 #!/usr/bin/env bash
 
 # make sure service is runing only once
 pid_fn=${BASEDIR}/run/pids/${service}
-
-# cleanup on exit
-trap "rm \$pid_fn" SIGINT SIGTERM EXIT
 
 # create run dir
 if [ ! -e ${BASEDIR}/run ]; then
@@ -37,19 +40,27 @@ fi
 if [ -f "\$pid_fn" ] && kill -0 \$(cat \$pid_fn) 2>/dev/null; then
   printf "\$0: already running (\"\${pid_fn}\")\n" >&2; exit 0;
 fi
-echo \$\$ > \$pid_fn
+echo \$BASHPID > \$pid_fn
+
+# cleanup on exit
+trap "rm \$pid_fn" INT TERM EXIT
+
+rm -f ${BASEDIR}/var/log/${service}/
 ${BASEDIR}/bin/rotate ${BASEDIR}/var/exit/${service}/exit_code
 export TULS_BASEDIR=${BASEDIR}
 export TULS_PATH=${BASEDIR}/3rdparty/busybox/bin/:${BASEDIR}/3rdparty/busybox/sbin/:${BASEDIR}/3rdparty/busybox/usr/bin/:${BASEDIR}/3rdparty/busybox/usr/sbin/
 {
-  # run service
-  nice $NICE ionice $IONICE bash -c "$EXECSTART" 2>&1
+  {
+    echo \$BASHPID > \$pid_fn   # some subshell was created by now
+    $EXECSTART
+  } 2>&1
   # write exit code
   echo \$? > ${BASEDIR}/var/exit/${service}/exit_code
 } | ${BASEDIR}/3rdparty/busybox/usr/sbin/svlogd -tt ${BASEDIR}/var/log/${service}/
 
 EOI
     chmod +x ${BASEDIR}/var/lib/${service}
+    chmod +x ${BASEDIR}/var/lib/${service}_child
   )
 done
 
