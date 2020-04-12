@@ -25,6 +25,15 @@ for service in $services; do
 
 # make sure service is runing only once
 pid_fn=${BASEDIR}/run/pids/${service}
+
+# cleanup on exit
+trap "rm \$pid_fn" SIGINT SIGTERM EXIT
+
+# create run dir
+if [ ! -e ${BASEDIR}/run ]; then
+  mkdir -p /tmp/tuls_run_${USER}
+  ln -s /tmp/tuls_run_${USER} ${BASEDIR}/run
+fi
 if [ -f "\$pid_fn" ] && kill -0 \$(cat \$pid_fn) 2>/dev/null; then
   printf "\$0: already running (\"\${pid_fn}\")\n" >&2; exit 0;
 fi
@@ -38,6 +47,7 @@ export TULS_PATH=${BASEDIR}/3rdparty/busybox/bin/:${BASEDIR}/3rdparty/busybox/sb
   # write exit code
   echo \$? > ${BASEDIR}/var/exit/${service}/exit_code
 } | ${BASEDIR}/3rdparty/busybox/usr/sbin/svlogd -tt ${BASEDIR}/var/log/${service}/
+
 EOI
     chmod +x ${BASEDIR}/var/lib/${service}
   )
