@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+# update crontab
+
+set -ETeuo pipefail
+
+declare BASEDIR; BASEDIR="$( cd "$( dirname $0 )/.." && pwd )"
+
+services="$( 
+  cd ${BASEDIR}/services 
+  ls * | grep ".service" | sed "s/.service//" 
+)"
+
+for service in $services; do
+  (
+    TULS_BASEDIR=${BASEDIR}
+    source ${BASEDIR}/services/${service}.service
+    # prepare log dir
+    mkdir -p ${BASEDIR}/var/log/${service}/
+    # prepare status
+    mkdir -p ${BASEDIR}/var/exit/${service}/
+    # write wrapper
+    cat > ${BASEDIR}/var/lib/${service} << EOI
+#!/usr/bin/env bash
+
+# make sure service is runing only once
+pid_fn=${BASEDIR}/run/pids/${service}
+if [ -f "\$pid_fn" ] && kill -0 \$(cat \$pid_fn) 2>/dev/null; then
+  printf "\$0: already running (\"\${pid_fn}\")\n" >&2; exit 0;
+fi
+echo \$\$ > \$pid_fn
+${BASEDIR}/bin/rotate ${BASEDIR}/var/exit/${service}/exit_code
+export TULS_BASEDIR=${BASEDIR}
+export TULS_PATH=${BASEDIR}/3rdparty/busybox/bin/:${BASEDIR}/3rdparty/busybox/sbin/:${BASEDIR}/3rdparty/busybox/usr/bin/:${BASEDIR}/3rdparty/busybox/usr/sbin/
+{
+  # run service
+  nice $NICE ionice $IONICE bash -c "$EXECSTART" 2>&1
+  # write exit code
+  echo \$? > ${BASEDIR}/var/exit/${service}/exit_code
+} | ${BASEDIR}/3rdparty/busybox/usr/sbin/svlogd -tt ${BASEDIR}/var/log/${service}/
+EOI
+    chmod +x ${BASEDIR}/var/lib/${service}
+  )
+done
+
+printf "writing crontab:\n\n"
+for service in $services; do
+  (
+    TULS_BASEDIR=${BASEDIR}
+    source ${BASEDIR}/services/${service}.service
+    echo "${TIMER} ${BASEDIR}/var/lib/${service}"
+  )
+done | tee /dev/fd/2 | crontab -

@@ -1,0 +1,13 @@
+EXECSTART="DOCROOT=${TULS_BASEDIR}/var/www/ PORT=8080 ${TULS_BASEDIR}/3rdparty/lighttpd/sbin/lighttpd -D -f ${TULS_BASEDIR}/etc/lighttpd.conf"
+TIMER="* * * * *"
+NICE="-n 0"
+IONICE="-c 2 -n 3"
+
+## nice
+# high: -n 0
+# low:  -n 19
+
+## ionice
+# Best-effort high: -c 2 -n 0
+# Best-effort low:  -c 2 -n 7
+# Idle: -c 3

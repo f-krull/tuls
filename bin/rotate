@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# mini logrotate - moves all file.X -> file.X+1
+
+set -ETeuo pipefail
+
+fn=$1
+
+if [ ! -f "$fn" ]; then
+  exit 0
+fi
+
+for i in $(seq 8 -1 1); do
+  echo $fn.$i
+  if [  ! -f "$fn.$i" ]; then
+    echo skip
+    continue
+  fi
+  mv $fn.$i $fn.$((i+1))
+done
+
+mv $fn $fn.1
