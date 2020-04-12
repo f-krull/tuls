@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+# kill all running services
+
+set -ETeuo pipefail
+
+declare BASEDIR; BASEDIR="$( cd "$( dirname $0 )/.." && pwd )"
+
+
+services="$( 
+  cd ${BASEDIR}/services 
+  ls * | grep ".service" | sed "s/.service//" 
+)"
+
+kill_all() {
+  sign=$1
+  for service in $services; do
+    pid_fn=${BASEDIR}/run/pids/${service}
+    [ -f $pid_fn ] || continue
+    echo "kill -$sign $(cat $pid_fn) ($service)" 
+    ${BASEDIR}/3rdparty/busybox/usr/bin/pkill -$sign -P $(cat $pid_fn) 2>/dev/null || true
+  done
+}
+
+is_any_alive() {
+  for service in $services; do
+    pid_fn=${BASEDIR}/run/pids/${service}
+    if [ -f "$pid_fn" ] && ${BASEDIR}/3rdparty/busybox/bin/kill -0 $(cat $pid_fn) 2>/dev/null; then
+      echo "waiting for $(cat $pid_fn) ($service)"
+      return 0
+    fi
+  done
+  return 1
+}
+
+
+kill_all 15
+
+for i in `seq 1 5`; do
+  is_any_alive || exit 0
+  sleep 1
+done
+
+kill_all 9
