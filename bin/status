@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+# update crontab
+
+set -ETeuo pipefail
+
+declare BASEDIR; BASEDIR="$( cd "$( dirname $0 )/.." && pwd )"
+
+services="$( 
+  cd ${BASEDIR}/services 
+  ls * | grep ".service" | sed "s/.service//" 
+)"
+
+get_status() {
+  local service=$1
+  pid_fn=${BASEDIR}/run/pids/${service}
+  if [ -f "$pid_fn" ] && ${BASEDIR}/3rdparty/busybox/bin/kill -0 $(cat $pid_fn) 2>/dev/null; then
+    echo "running"
+    return 0
+  fi
+  if [ -f ${BASEDIR}/var/exit/${service}/exit_code ]; then
+    exit_code=$(cat ${BASEDIR}/var/exit/${service}/exit_code)
+    case "$exit_code" in
+      "0")
+        echo "stopped"
+        ;;
+      *)
+        printf "error_%s\n" "$exit_code"
+        ;;
+    esac
+    return 0
+  fi
+  echo "unknown"
+}
+
+printf "name\t"
+printf "status\t"
+printf "started\t"
+printf "finished\n"
+for service in $services; do
+  printf "%s\t" "$service"
+  status=$(get_status $service )
+  printf "%s\t" "$status"
+  pid_fn=${BASEDIR}/run/pids/${service}
+  started=$([ -f $pid_fn ] && 3rdparty/busybox/bin/date -Iseconds -r $pid_fn || printf "NA")
+  printf "%s\t" "$started"
+  ec_fn=${BASEDIR}/var/exit/${service}/exit_code
+  finished=$( [ -f $ec_fn ] && 3rdparty/busybox/bin/date -Iseconds -r $ec_fn || printf "NA" )
+  printf "%s\n" "$finished"
+done
