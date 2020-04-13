@@ -42,9 +42,9 @@ for service in $services; do
   status=$(get_status $service )
   printf "%s\t" "$status"
   pid_fn=${BASEDIR}/run/pids/${service}
-  started=$([ -f $pid_fn ] && 3rdparty/busybox/bin/date -Iseconds -r $pid_fn || printf "NA")
+  started=$([ -f $pid_fn ] && ${BASEDIR}/3rdparty/busybox/bin/date -Iseconds -r $pid_fn || printf "NA")
   printf "%s\t" "$started"
   ec_fn=${BASEDIR}/var/exit/${service}/exit_code
-  finished=$( [ -f $ec_fn ] && 3rdparty/busybox/bin/date -Iseconds -r $ec_fn || printf "NA" )
+  finished=$( [ -f $ec_fn ] && ${BASEDIR}/3rdparty/busybox/bin/date -Iseconds -r $ec_fn || printf "NA" )
   printf "%s\n" "$finished"
 done
