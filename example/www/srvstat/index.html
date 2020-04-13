@@ -2,13 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
- 
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/stat.css">
   <title>Status</title>
 </head>
 <body>
   <div class="container mt-3">
+    <h1>Service status</h1>
+    <span>updated: </span><span id="updatedOn"></span>
     <div>
-      <table id="statusTable"><tr><th>please</th></tr><tr><td>wait</td></tr></table>
+      <table id="statusTable" class="table"><tr><th>please</th></tr><tr><td>wait</td></tr></table>
     </div>
   </div>
   <script>
@@ -17,6 +20,14 @@
         method: 'GET'
       });
       return response.json();
+    }
+
+    function getStatusIcon(str) {
+      if (str == "running") return "&#x1F7E2";
+      if (str == "stopped") return "&#x1F7E9";
+      if (str.startsWith('error')) return "&#x1F7E5"; 	
+      //"&#x1F7E5"
+      return "&#x2B1C";
     }
 
     async function update() {
@@ -31,6 +42,9 @@
       // header
       {
         var tr = document.createElement("tr");
+        // icon
+        var th = document.createElement("th");
+        tr.appendChild(th);
         for (let [key, value] of Object.entries(stat_json[0])) {
           var th = document.createElement("th");
           th.innerHTML = key;
@@ -40,6 +54,10 @@
       }
       stat_json.forEach(e => {
         var tr = document.createElement("tr");
+        // icon
+        var td = document.createElement("td");
+        td.innerHTML = getStatusIcon(e['status']);
+        tr.appendChild(td);
         for (let [key, value] of Object.entries(e)) {
           var td = document.createElement("td");
           td.innerHTML = value;
@@ -47,7 +65,7 @@
         }
         table.appendChild(tr);
       });
-      console.log(`update at ${new Date().toISOString()}`);
+      document.querySelector('#updatedOn').innerHTML = (new Date()).toLocaleString();
     }
 
     async function doStuff() {
