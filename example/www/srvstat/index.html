@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+ 
+  <title>Status</title>
+</head>
+<body>
+  <div class="container mt-3">
+    <div>
+      <table id="statusTable"><tr><th>please</th></tr><tr><td>wait</td></tr></table>
+    </div>
+  </div>
+  <script>
+    async function getData(url) {
+      const response = await fetch(url, {
+        method: 'GET'
+      });
+      return response.json();
+    }
+
+    async function update() {
+      const stat_json = await getData('./get_status_json.cgi');
+      // clear table
+      if (stat_json.length == 0) {
+        return;
+      }
+      var table = document.querySelector('#statusTable');
+      table.innerHTML = '';
+
+      // header
+      {
+        var tr = document.createElement("tr");
+        for (let [key, value] of Object.entries(stat_json[0])) {
+          var th = document.createElement("th");
+          th.innerHTML = key;
+          tr.appendChild(th);
+        }
+        table.appendChild(tr);
+      }
+      stat_json.forEach(e => {
+        var tr = document.createElement("tr");
+        for (let [key, value] of Object.entries(e)) {
+          var td = document.createElement("td");
+          td.innerHTML = value;
+          tr.appendChild(td);
+        }
+        table.appendChild(tr);
+      });
+      console.log(`update at ${new Date().toISOString()}`);
+    }
+
+    async function doStuff() {
+      update();
+      setInterval(update, 5000);
+    }
+    
+    doStuff();
+  </script>
+</body>
+</html>
