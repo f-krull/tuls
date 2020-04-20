@@ -1,0 +1,19 @@
+APP_NAME = LCBC GIT
+RUN_USER = ${USER}
+RUN_MODE = prod
+
+[repository]
+ROOT = ${GITEA_BASEDIR}/gitea-repositories
+
+[database]
+DB_TYPE = sqlite3 
+PATH    = ${GITEA_BASEDIR}/data/gitea.db
+
+[server]
+HTTP_PORT    = 3000
+DOMAIN       = $HOSTNAME
+SSH_DOMAIN   = $HOSTNAME
+DISABLE_SSH  = true
+SSH_PORT     = 
+OFFLINE_MODE = true
+LFS_CONTENT_PATH = ${GITEA_BASEDIR}/data/lfs

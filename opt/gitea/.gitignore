@@ -1,0 +1,5 @@
+data/*
+log/*
+custom/conf/app.ini
+gitea-*-linux-amd64
+gitea-repositories/
