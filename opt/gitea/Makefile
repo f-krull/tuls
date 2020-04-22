@@ -6,15 +6,26 @@ GITEABIN     := gitea-$(GITEAVERSION)-linux-amd64
 GITEA_BASEDIR = $(BASEDIR)
 export GITEA_BASEDIR
 
-all: $(GITEABIN)
-	[ -f config.txt ] && [ ! -f custom/conf/app.ini ] \
-	  && mkdir -p custom/conf/ \
-		&& envsubst < config.txt > custom/conf/app.ini || true
+all: install
+	
+.PHONY: install
+install: $(GITEABIN) custom/conf/app.ini custom/public custom/templates
+
+custom/conf/app.ini:
+	mkdir -p custom/conf/ && envsubst < config.txt > custom/conf/app.ini
+
+custom/templates: 
+	cd custom && ln -s ../custom_example/templates
+
+custom/public: 
+	cd custom && ln -s ../custom_example/public
+
+.PHONY: run
+run: 
 	./$(GITEABIN) web 
 
-.PHONY: prepare_offline
-prepare_offline: $(GITEABIN)
-
+.PHONY: download
+download: $(GITEABIN)
 
 $(GITEABIN):
 	wget https://github.com/go-gitea/gitea/releases/download/v$(GITEAVERSION)/$(GITEABIN)
