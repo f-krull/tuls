@@ -23,7 +23,7 @@ for service in $services; do
     cat > ${BASEDIR}/var/lib/${service} << EOI
 #!/usr/bin/env bash
 
-  nice $NICE ionice $IONICE ${BASEDIR}/var/lib/${service}_child
+nice $NICE ionice $IONICE ${BASEDIR}/var/lib/${service}_child
 EOI
   # write child wrappter
   cat > ${BASEDIR}/var/lib/${service}_child << EOI
@@ -65,10 +65,13 @@ EOI
 done
 
 printf "writing crontab:\n\n"
-for service in $services; do
-  (
-    TULS_BASEDIR=${BASEDIR}
-    source ${BASEDIR}/services/${service}.service
-    echo "${TIMER} ${BASEDIR}/var/lib/${service}"
-  )
-done | tee /dev/fd/2 | crontab -
+{
+  printf "TULS_SRVDIR=${BASEDIR}/var/lib/\n"
+  for service in $services; do
+    (
+      TULS_BASEDIR=${BASEDIR}
+      source ${BASEDIR}/services/${service}.service
+      echo "${TIMER} \${TULS_SRVDIR}/${service}"
+    )
+  done 
+} | tee /dev/fd/2 | crontab -
