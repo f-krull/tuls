@@ -1,9 +1,12 @@
 3rdparty/*
 !3rdparty/Makefile
 !3rdparty/make_*.mk
+!3rdparty/bootstrap
 
 var/*
 !var/.keep
 run/*
 
 services
+
+example/www/css/*

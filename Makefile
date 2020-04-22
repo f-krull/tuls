@@ -23,7 +23,7 @@ distclean:
 
 
 .PHONY: example
-example: services var/www opt
+example: services var/www opt css
 	bin/update
 
 services:
@@ -31,3 +31,12 @@ services:
 
 var/www:
 	cd var && ln -s ../example/www www
+
+.PHONY: css
+css: example/www/css/bootstrap.min.css
+
+example/www/css/bootstrap.min.css:
+	cat 3rdparty/bootstrap/bootstrap.min.css.gz | gunzip > example/www/css/bootstrap.min.css
+
+example/www/css/bootstrap.min.map.css:
+	cat 3rdparty/bootstrap/bootstrap.min.css.map.gz | gunzip > example/www/css/bootstrap.min.map.css
