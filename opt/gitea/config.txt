@@ -17,3 +17,6 @@ DISABLE_SSH  = true
 SSH_PORT     = 
 OFFLINE_MODE = true
 LFS_CONTENT_PATH = ${GITEA_BASEDIR}/data/lfs
+
+[log.console]
+COLORIZE = false
