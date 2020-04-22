@@ -1,0 +1,4 @@
+download/*
+rsnapshot/*
+rsnapshot_build/*
+user.conf

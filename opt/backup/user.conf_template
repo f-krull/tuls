@@ -1,0 +1,4 @@
+snapshot_root	/tsd/p23/data/durable/backups
+backup	/tsd/p23/data/durable/nettskjema	localhost
+backup	/tsd/p23/data/durable/folder2	localhost
+
