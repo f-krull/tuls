@@ -20,8 +20,8 @@ dlclean: $(addsuffix _dlclean, $(modules))
 
 #----
 
+.PHONY: install
 install: all user.conf
-
 
 user.conf:
 	cp user.conf_template user.conf
