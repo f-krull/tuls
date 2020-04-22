@@ -6,6 +6,19 @@ set -ETeuo pipefail
 
 declare BASEDIR; BASEDIR="$( cd "$( dirname $0 )/.." && pwd )"
 
+
+NON_INTERACTIVE=0
+
+while getopts "y" opt; do
+    case "$opt" in
+    "y")
+      NON_INTERACTIVE=1
+      ;;
+    esac
+done
+
+shift $((OPTIND-1))
+
 services="$( 
   cd ${BASEDIR}/services 
   ls * | grep ".service" | sed "s/.service//" 
@@ -64,8 +77,11 @@ EOI
   )
 done
 
-printf "writing crontab:\n\n"
-{
+ct_tuls="$(
+  # remove previous entries
+  crontab -l | awk '/^#TULS_BEGIN/ {flag=1} /^#TULS_END/ {flag=0} !flag {print}' | grep -v "#TULS_END"
+
+  printf "#TULS_BEGIN\n"
   printf "TULS_SRVDIR=${BASEDIR}/var/lib/\n"
   for service in $services; do
     (
@@ -74,4 +90,23 @@ printf "writing crontab:\n\n"
       echo "${TIMER} \${TULS_SRVDIR}/${service}"
     )
   done 
-} | tee /dev/fd/2 | crontab -
+  printf "#TULS_END\n"
+)"
+
+printf "$ct_tuls\n\n"
+
+
+# write crontab?
+if [ ${NON_INTERACTIVE} -eq 0 ]; then
+  read -p "write to crontab? [y/n]? " -n 1 -r REPLY
+  echo
+else
+  REPLY="y"
+fi
+
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+  printf "$ct_tuls\n" | crontab -
+  echo "contab written"
+else 
+  echo "aborting"
+fi
