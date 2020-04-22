@@ -16,10 +16,10 @@ done
 
 printf "Content-Type: text/plain; charset=UTF-8\r\n\r\n"
 
-#if [[ ! "${PARAM_serviceid}" =~ "^[0-9A-Za-z]*$" ]]; then
-#  echo "invalid service ID \"${PARAM_serviceid}\""
-#  exit 1
-#fi
+if [[ ! "${PARAM_serviceid}" =~ ^[0-9A-Za-z]*$ ]]; then
+  echo "invalid service ID \"${PARAM_serviceid}\""
+  exit 1
+fi
 
 
 cat ${BASEDIR}/var/log/${PARAM_serviceid}/current
