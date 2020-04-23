@@ -22,7 +22,7 @@ distclean:
 	$(MAKE) -C 3rdparty clean
 	$(MAKE) -C opt/backup clean
 	$(RM) example/www/css/bootstrap.min.css
-	$(RM) example/www/css/bootstrap.min.map.css
+	$(RM) example/www/css/bootstrap.min.css.map
 	$(RM) -r var/log/*
 	$(RM) -r var/exit/*
 	$(RM) run/pids/*
@@ -38,10 +38,10 @@ var/www:
 	cd var && ln -s ../example/www www
 
 .PHONY: css
-css: example/www/css/bootstrap.min.css example/www/css/bootstrap.min.map.css
+css: example/www/css/bootstrap.min.css example/www/css/bootstrap.min.css.map
 
 example/www/css/bootstrap.min.css:
 	cat 3rdparty/bootstrap/bootstrap.min.css.gz | gunzip > example/www/css/bootstrap.min.css
 
-example/www/css/bootstrap.min.map.css:
-	cat 3rdparty/bootstrap/bootstrap.min.css.map.gz | gunzip > example/www/css/bootstrap.min.map.css
+example/www/css/bootstrap.min.css.map:
+	cat 3rdparty/bootstrap/bootstrap.min.css.map.gz | gunzip > example/www/css/bootstrap.min.css.map
