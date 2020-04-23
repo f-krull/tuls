@@ -93,12 +93,13 @@ ct_tuls="$(
   printf "#TULS_END\n"
 )"
 
-printf "$ct_tuls\n\n"
+printf "new crontab:\n"
+printf "---------------------------------------------------\n"
+printf "$ct_tuls\n"
+printf "---------------------------------------------------\n\n"
 
-
-# write crontab?
 if [ ${NON_INTERACTIVE} -eq 0 ]; then
-  read -p "write to crontab? [y/n]? " -n 1 -r REPLY
+  read -p "write new crontab? [y/n]? " -n 1 -r REPLY
   echo
 else
   REPLY="y"
