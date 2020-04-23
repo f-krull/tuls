@@ -58,7 +58,7 @@ echo \$BASHPID > \$pid_fn
 # cleanup on exit
 trap "rm \$pid_fn" INT TERM EXIT
 
-rm -f ${BASEDIR}/var/log/${service}/
+rm -f ${BASEDIR}/var/log/${service}/lock
 ${BASEDIR}/bin/rotate ${BASEDIR}/var/exit/${service}/exit_code
 export TULS_BASEDIR=${BASEDIR}
 export TULS_PATH=${BASEDIR}/3rdparty/busybox/bin/:${BASEDIR}/3rdparty/busybox/sbin/:${BASEDIR}/3rdparty/busybox/usr/bin/:${BASEDIR}/3rdparty/busybox/usr/sbin/
