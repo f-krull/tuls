@@ -60,6 +60,6 @@
   * wget
 
 ## TODO
-  * entry page
-    * link to gitea and status page
+  * entry page beautification
+  * rnsapshot example service and webui?
   * busybox: use INSTALL_NO_USR config
