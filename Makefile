@@ -29,8 +29,7 @@ distclean:
 
 
 .PHONY: example
-example: services var/www opt css
-	bin/update
+example: 3rdparty services var/www opt css
 
 services:
 	ln -s example/services services
