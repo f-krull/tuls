@@ -27,10 +27,15 @@
   * Build software and set up example services  
     `make example`  
   * Edit configs (ports, etc.). See below for specific details
-  * Start services (default: webserver, gitea, status monitoring)  
+  * Auto-start services (default: webserver, gitea, status monitoring)  
     `bin/update`
-  * Go to `http://[HOST]:[PORT]` (default: http://localhost/:8080)  
+  * Go to `http://[HOST]:[PORT]` (default: http://localhost:8080)  
     
+#### uninstall
+  * Disable auto-start  
+    `bin/disable`
+  * Stop services  
+    `bin/stop`
 
 ## Configuration
 
@@ -40,13 +45,13 @@
   * tbd.
 ### Gitea
   * tbd.
-### Backup
+### Backup (rsnapshot)
   * tbd.
 
 
 ## Requirements
-  * linux
   * bash
+  * build tools (make, gcc, ...)
   * git? (gitea)
   * rsync (backup)
 
