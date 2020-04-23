@@ -45,6 +45,7 @@
     Replace `./services` with a symlink to your custom folder 
     containg your own `*.service` files.
   * Run `bin/update` after configuring services.
+  * Any services should run in foreground and write log stdout or stderr
 
 ### Webserver (lighttpd)
 
@@ -57,14 +58,20 @@
   
 ### Gitea
   * Edit `opt/gitea/custom/conf/app.ini` to change gitea settings.
-  * Replace the symlinks `opt/gitea/custom/public` and `opt/gitea/custom/templates` to directories conatining your customized files. 
+  * Replace the symlinks `opt/gitea/custom/public` and `opt/gitea/custom/templates` to directories conatining your customized files.
+
 ### Backup (rsnapshot)
   * tbd.
 
 ## Folder structure
-
-
-
+  * `./bin/` TULS bins
+  * `./etc/` TULS config files
+  * `./opt/` Optional apps; pre-packaged services
+  * `./run/` Run-time variable data; invalid after each reboot
+  * `./var/` Variable files; files that will change over time
+  * `./var/exit/` Exit codes of services 
+  * `./var/log/` Log files of services
+  * `./var/www` Symlink to wwww folder hosted by webserver
 
 ## Requirements
   * bash
