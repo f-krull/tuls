@@ -40,13 +40,30 @@
 ## Configuration
 
 ### Services
-  * tbd.
+
+  * By default `./services` is a symlink to `example/services`. 
+    Replace `./services` with a symlink to your custom folder 
+    containg your own `*.service` files.
+  * Run `bin/update` after configuring services.
+
 ### Webserver (lighttpd)
-  * tbd.
+
+#### change port
+  * Change the port (default 8080) defined in the `EXECSTART` entry of the webserver `.service` file (default `services/webserver.service`)
+
+#### custom html and cgi files 
+  * By default `./var/www` is a symlink to `example/www`. 
+    Replace `./var/www` with a symlink to your custom folder.
+  
 ### Gitea
-  * tbd.
+  * Edit `opt/gitea/custom/conf/app.ini` to change gitea settings.
+  * Replace the symlinks `opt/gitea/custom/public` and `opt/gitea/custom/templates` to directories conatining your customized files. 
 ### Backup (rsnapshot)
   * tbd.
+
+## Folder structure
+
+
 
 
 ## Requirements
