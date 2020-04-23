@@ -20,6 +20,12 @@ opt:
 .PHONY: distclean
 distclean:
 	$(MAKE) -C 3rdparty clean
+	$(MAKE) -C opt/backup clean
+	$(RM) example/www/css/bootstrap.min.css
+	$(RM) example/www/css/bootstrap.min.map.css
+	$(RM) -r var/log/*
+	$(RM) -r var/exit/*
+	$(RM) run/pids/*
 
 
 .PHONY: example
