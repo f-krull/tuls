@@ -23,11 +23,11 @@
   * copy the whole directory into TSD
 
 ### inside TSD
-  * `cd ..`
-  * Build software and set up example services
+  * `cd tuls...`
+  * Build software and set up example services  
     `make example`  
   * Edit configs (ports, etc.). See below for specific details
-  * Start services (default: webserver, gitea, status monitoring)
+  * Start services (default: webserver, gitea, status monitoring)  
     `bin/update`
   * Go to `http://[HOST]:[PORT]` (default: http://localhost/:8080)  
     
