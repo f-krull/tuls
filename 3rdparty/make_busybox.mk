@@ -27,5 +27,6 @@ busybox/bin/busybox: download/busybox-${LIBVER_busybox}.tar.bz2
 		&& cd busybox_build \
 		&& tar xf ../download/busybox-${LIBVER_busybox}.tar.bz2
 	$(MAKE) -C busybox_build/busybox-$(LIBVER_busybox) defconfig
-	$(MAKE) -C busybox_build/busybox-$(LIBVER_busybox) install CONFIG_PREFIX=$(BASEDIR)/busybox LDFLAGS="--static"
+	# TSD might not have static libs install; But if possbitble append LDFLAGS="--static" below
+	$(MAKE) -C busybox_build/busybox-$(LIBVER_busybox) install CONFIG_PREFIX=$(BASEDIR)/busybox
 	$(RM) -r busybox_build
