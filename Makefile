@@ -38,7 +38,7 @@ var/www:
 	cd var && ln -s ../example/www www
 
 .PHONY: css
-css: example/www/css/bootstrap.min.css
+css: example/www/css/bootstrap.min.css example/www/css/bootstrap.min.map.css
 
 example/www/css/bootstrap.min.css:
 	cat 3rdparty/bootstrap/bootstrap.min.css.gz | gunzip > example/www/css/bootstrap.min.css
