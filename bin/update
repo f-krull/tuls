@@ -80,7 +80,7 @@ done
 
 ct_tuls="$(
   # remove previous entries
-  crontab -l | awk '/^#TULS_BEGIN/ {flag=1} /^#TULS_END/ {flag=0} !flag {print}' | grep -v "#TULS_END"
+  crontab -l | ${BASEDIR}/3rdparty/busybox/usr/bin/awk '/^#TULS_BEGIN/ {flag=1} /^#TULS_END/ {flag=0} !flag {print}' | grep -v "#TULS_END"
 
   printf "#TULS_BEGIN\n"
   printf "TULS_SRVDIR=${BASEDIR}/var/lib/\n"
@@ -95,9 +95,9 @@ ct_tuls="$(
 )"
 
 printf "new crontab:\n"
-printf "---------------------------------------------------\n"
+printf -- "---------------------------------------------------\n"
 printf "$ct_tuls\n"
-printf "---------------------------------------------------\n\n"
+printf -- "---------------------------------------------------\n\n"
 
 if [ ${NON_INTERACTIVE} -eq 0 ]; then
   read -p "write new crontab? [y/n]? " -n 1 -r REPLY

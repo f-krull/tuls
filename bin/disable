@@ -21,7 +21,7 @@ shift $((OPTIND-1))
 
 ct="$(
   # remove previous entries
-  crontab -l | awk '/^#TULS_BEGIN/ {flag=1} /^#TULS_END/ {flag=0} !flag {print}' | grep -v "#TULS_END"
+  crontab -l | ${BASEDIR}/3rdparty/busybox/usr/bin/awk '/^#TULS_BEGIN/ {flag=1} /^#TULS_END/ {flag=0} !flag {print}' | grep -v "#TULS_END"
 )"
 
 printf "new crontab:\n"
