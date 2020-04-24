@@ -48,7 +48,7 @@ pid_fn=${BASEDIR}/run/pids/${service}
 # create run dir
 if [ ! -e ${BASEDIR}/run ]; then
   mkdir -p /tmp/tuls_run_${USER}
-  ln -s /tmp/tuls_run_${USER} ${BASEDIR}/run
+  ln -sfn /tmp/tuls_run_${USER} ${BASEDIR}/run
   mkdir -p ${BASEDIR}/run/pids
 fi
 if [ -f "\$pid_fn" ] && kill -0 \$(cat \$pid_fn) 2>/dev/null; then
