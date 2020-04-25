@@ -56,6 +56,9 @@ if [ -f "\$pid_fn" ] && kill -0 \$(cat \$pid_fn) 2>/dev/null; then
 fi
 echo \$BASHPID > \$pid_fn
 
+# cleanup on exit
+trap "rm \$pid_fn" INT TERM EXIT
+
 rm -f ${BASEDIR}/var/log/${service}/lock
 ${BASEDIR}/bin/rotate ${BASEDIR}/var/exit/${service}/exit_code
 export TULS_BASEDIR=${BASEDIR}
@@ -68,7 +71,7 @@ export TULS_PATH=${BASEDIR}/3rdparty/busybox/bin/:${BASEDIR}/3rdparty/busybox/sb
   # write exit code
   echo \$? > ${BASEDIR}/var/exit/${service}/exit_code
 } | ${BASEDIR}/3rdparty/busybox/usr/sbin/svlogd -tt ${BASEDIR}/var/log/${service}/
-rm \$pid_fn
+
 EOI
     chmod +x ${BASEDIR}/var/lib/${service}
     chmod +x ${BASEDIR}/var/lib/${service}_child
