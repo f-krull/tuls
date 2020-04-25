@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# cleanup usued pid files
+
+set -ETeuo pipefail
+
+
+declare BASEDIR; BASEDIR="$( cd "$( dirname $0 )/.." && pwd )"
+
+services="$( 
+  cd ${BASEDIR}/services 
+  ls * | grep ".service" | sed "s/.service//" 
+)"
+
+for service in $services; do
+  pid_fn=${BASEDIR}/run/pids/${service}
+  if [ ! -f "$pid_fn" ]; then
+    continue
+  fi
+  if [ -f "$pid_fn" ] && ${BASEDIR}/3rdparty/busybox/bin/kill -0 $(cat $pid_fn) 2>/dev/null; then
+    #running
+    continue
+  fi
+  sleep 1
+  if [ -f "$pid_fn" ] && ${BASEDIR}/3rdparty/busybox/bin/kill -0 $(cat $pid_fn) 2>/dev/null; then
+    #running
+    continue
+  fi
+  rm $pid_fn
+done

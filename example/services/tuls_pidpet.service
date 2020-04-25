@@ -1,5 +1,7 @@
-# command to run
-EXECSTART="DOCROOT=${TULS_BASEDIR}/var/www/ PORT=8080 ${TULS_BASEDIR}/3rdparty/lighttpd/sbin/lighttpd -D -f ${TULS_BASEDIR}/etc/lighttpd.conf"
+# Pet PID files (inside TMPDIR) 
+# They might get cleaned otherwise (systemd-tmpfiles-clean)
+
+EXECSTART="touch ${TULS_BASEDIR}/run/pids/*"
 
 ## when to start service; used for crontab
 TIMER="* * * * *"
@@ -14,3 +16,5 @@ NICE="-n 0"
 # Best-effort low:  -c 2 -n 7
 # Idle: -c 3
 IONICE="-c 2 -n 3"
+
+
