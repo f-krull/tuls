@@ -1,16 +1,40 @@
 <!doctype html>
 <html>
   <head>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/main.css">
     <title>TULS (TSD userland services)</title>
   </head>
   <body>
-    <ul>
-      <li><a href="srvstat/">Service status</a></li>
-      <li>
-        <script language="JavaScript">
-          document.write(`<a href="http://${window.location.hostname}:3000">Gitea</a>`);
-        </script>
-      </li>
-    </ul>
+    <div class="container">
+      <div class="card-deck">
+        <div class="col-md-3 mt-4">
+          <a target="_blank" class="card h-100 bg-light" href="./srvstat/">
+            <div class="img-asp">
+              <img src="img/heartbeat.jpg" class="card-img-top object-fit" alt="...">
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Service Status</h5>
+              <p class="card-text">Log files, exit-codes, etc.</p>
+              <p class="card-text"><small class="text-muted"></small></p>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-3 mt-4">
+          <script language="JavaScript">
+            document.write(`<a target="_blank" class="card h-100 bg-light" href="http://${window.location.hostname}:3000">`);
+          </script>
+            <div class="img-asp">
+              <img src="img/gitea.png" class="card-img-top object-fit" alt="...">
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Gitea</h5>
+              <p class="card-text">Web-based code hosting service using Git.</p>
+              <p class="card-text"><small class="text-muted"></small></p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
