@@ -1,0 +1,33 @@
+
+.status-running {
+  height: 25px;
+  width: 25px;
+  background-color: rgb(55, 223, 21);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+
+.status-stopped-ok {
+  height: 25px;
+  width: 25px;
+  background-color: rgb(55, 223, 21);
+  border-radius: 0%;
+  display: inline-block;
+}
+
+.status-stopped-err {
+  height: 25px;
+  width: 25px;
+  background-color: rgb(235, 18, 18);
+  border-radius: 0%;
+  display: inline-block;
+}
+
+.status-unknown {
+  height: 25px;
+  width: 25px;
+  background-color: rgb(160, 160, 160);
+  border-radius: 0%;
+  display: inline-block;
+}
