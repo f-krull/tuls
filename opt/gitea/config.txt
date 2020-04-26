@@ -20,3 +20,7 @@ LFS_CONTENT_PATH = ${GITEA_BASEDIR}/data/lfs
 
 [log.console]
 COLORIZE = false
+
+[security]
+
+PASSWORD_COMPLEXITY = off
