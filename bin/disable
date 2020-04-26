@@ -9,6 +9,7 @@ declare BASEDIR; BASEDIR="$( cd "$( dirname $0 )/.." && pwd )"
 
 NON_INTERACTIVE=0
 
+
 while getopts "y" opt; do
     case "$opt" in
     "y")
@@ -21,7 +22,7 @@ shift $((OPTIND-1))
 
 ct="$(
   # remove previous entries
-  crontab -l | ${BASEDIR}/3rdparty/busybox/usr/bin/awk '/^#TULS_BEGIN/ {flag=1} /^#TULS_END/ {flag=0} !flag {print}' | grep -v "#TULS_END"
+  crontab -l | ${BASEDIR}/3rdparty/busybox/usr/bin/awk '/^#TULS_BEGIN/ {flag=1} /^#TULS_END/ {flag=0} !flag {print}' | grep -v "#TULS_END" || true
 )"
 
 printf "new crontab:\n"
