@@ -90,7 +90,7 @@ ct_tuls="$(
       source ${BASEDIR}/services/${service}.service
       echo "${TIMER} \${TULS_SRVDIR}/${service}"
     )
-  done 
+  done | sort
   printf "#TULS_END\n"
 )"
 
