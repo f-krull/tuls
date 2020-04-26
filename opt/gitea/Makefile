@@ -1,6 +1,6 @@
 BASEDIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-GITEAVERSION := 1.9.6
+GITEAVERSION := 1.11.4
 GITEABIN     := gitea-$(GITEAVERSION)-linux-amd64
 
 GITEA_BASEDIR = $(BASEDIR)
