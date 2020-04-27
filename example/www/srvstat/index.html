@@ -4,9 +4,20 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="../css/bootstrap.min.css">
   <link rel="stylesheet" href="./css/stat.css">
+  <link rel="stylesheet" href="../css/shared.css">
   <title>Status</title>
 </head>
 <body>
+  <div class="navbar navbar-dark bg-dark box-shadow">
+    <div class="container d-flex">
+      <a class="navbar-brand" href="../">TULS</a>
+      <ul class="tulsbreadcrumb">
+        <li><a href="..">Home</a></li>
+        <li>Service Status</li>
+      </ul>
+      <div class="flex-grow-1"></div>
+    </div>
+  </div>
   <div class="container mt-3">
     <span class="h1">Service status</span><span class="ml-3">updated: </span><span id="updatedOn"></span>
     <div class="mt-3">
@@ -71,7 +82,7 @@
         }
         td = document.createElement("td");
         a = document.createElement("a");
-        a.href = `./get_logfile_text.cgi?serviceid=${e['name']}`;
+        a.href = `./log.html?serviceid=${e['name']}`;
         a.innerHTML = "view log";
         td.appendChild(a);
         tr.appendChild(td);

@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/stat.css">
+    <link rel="stylesheet" href="../css/shared.css">
+    <title>TULS (TSD userland services)</title>
+  </head>
+  <body>
+    <div class="navbar navbar-dark bg-dark box-shadow">
+      <div class="container d-flex">
+        <a class="navbar-brand" href="../">TULS</a>
+        <ul class="tulsbreadcrumb">
+          <li><a href="..">Home</a></li>
+          <li><a href="./index.html">Service Status</a></li>
+          <li id="bcLog">Log</li>
+        </ul>
+        <div class="flex-grow-1"></div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row mt-2">
+        <div class="col-md-9 my-2">
+        </div>
+        <div class="col-md-3 my-2">
+          <div id="btnRefresh" class="btn btn-primary btn-block mb-2">Refresh</div>
+        </div>
+      </div>
+      <div id="codeParent">
+        <pre id="codeLog"></pre>
+        <div id="codeSpinner" class="spinnger-on"><div>Loading...</div></div>
+      </div>
+    </div>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const serviceId = urlParams.get('serviceid');
+      document.querySelector("#bcLog").innerHTML = `Log &laquo;${serviceId}&raquo;`;
+  
+      async function getData(url) {
+        const response = await fetch(url, {
+          method: 'GET'
+        });
+        return response.text();
+      }
+  
+      async function update() {
+        const codeSpinner = document.querySelector("#codeSpinner");
+        codeSpinner.className = "spinner-on";
+        const log_txt = await getData(`./get_logfile_text.cgi?serviceid=${serviceId}`);
+        const codeLog = document.querySelector("#codeLog");
+        codeLog.innerHTML = log_txt;
+        const codeParent = document.querySelector("#codeParent");
+        codeLog.scrollTop = codeLog.scrollHeight;
+        // await (() => new Promise(resolve => setTimeout(resolve, 1000)))();
+        codeSpinner.className = "spinner-off";
+      }
+
+      document.querySelector("#btnRefresh").addEventListener('click', update);
+
+      update();
+    </script>
+  </body>
+</html>

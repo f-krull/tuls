@@ -2,15 +2,20 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/shared.css">
     <title>TULS (TSD userland services)</title>
   </head>
   <body>
     <div class="navbar navbar-dark bg-dark box-shadow">
-      <div class="container d-flex flex-column flex-md-row justify-content-between">
-        <div></div>
-        <div class="my-2 my-md-0 mr-md-3 vcenter">
+      <div class="container d-flex">
+        <a class="navbar-brand" href="#">TULS</a>
+        <ul class="tulsbreadcrumb">
+          <li>Home</li>
+        </ul>
+        <div class="flex-grow-1"></div>
+        <div class="my-2 my-md-0 mr-md-3 vcenter justify-content-between">
           <div class="d-inline text-white font-weight-bold">Service Status:</div> 
           <div id="divSrvStatus" class="d-inline"></div>
         </div>
@@ -20,7 +25,7 @@
       <div class="card-deck">
         <div class="col-md-3 mt-4">
           <a target="_blank" class="card h-100 bg-light" href="./srvstat/">
-            <div class="img-asp">
+            <div class="img-asp p-2">
               <img src="img/heartbeat.jpg" class="card-img-top object-fit" alt="...">
             </div>
             <div class="card-body">
@@ -34,7 +39,7 @@
           <script language="JavaScript">
             document.write(
           `<a target="_blank" class="card h-100 bg-light" href="http://${window.location.hostname}:3000">
-            <div class="img-asp">
+            <div class="img-asp p-2">
               <img src="img/gitea.png" class="card-img-top object-fit" alt="...">
             </div>
             <div class="card-body">

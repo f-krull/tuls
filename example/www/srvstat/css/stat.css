@@ -31,3 +31,50 @@
   border-radius: 0%;
   display: inline-block;
 }
+
+
+#codeParent {
+  height: 70vh;
+  overflow: scroll;
+  resize: vertical;
+  border: 1px solid lightgray;
+  position: relative;
+}
+
+#codeLog {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  font-size: small;
+}
+
+.spinner-on {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: lightgray;
+  opacity: 0.9;
+  text-align: center;
+}
+
+.spinner-on :first-child {
+  background-color: white;
+  display: inline-block;
+  position: absolute;
+  top: 50%; left: 50%;
+  padding: 8px;
+  font-weight: bold;
+  border-radius: 8px;
+  border: 2px solid gray;
+  transform: translate(-50%,-50%);
+}
+
+.spinner-off {
+  opacity: 0;
+}
