@@ -33,13 +33,13 @@ for service in $services; do
     # prepare status
     mkdir -p ${BASEDIR}/var/exit/${service}/
     # write parent wrapper
-    cat > ${BASEDIR}/var/lib/${service} << EOI
+    cat > ${BASEDIR}/var/cron/${service} << EOI
 #!/usr/bin/env bash
 
-nice $NICE ionice $IONICE ${BASEDIR}/var/lib/${service}_child
+nice $NICE ionice $IONICE ${BASEDIR}/var/cron/${service}_child
 EOI
   # write child wrappter
-  cat > ${BASEDIR}/var/lib/${service}_child << EOI
+  cat > ${BASEDIR}/var/cron/${service}_child << EOI
 #!/usr/bin/env bash
 
 # make sure service is runing only once
@@ -73,8 +73,8 @@ export TULS_PATH=${BASEDIR}/3rdparty/busybox/bin/:${BASEDIR}/3rdparty/busybox/sb
 } | ${BASEDIR}/3rdparty/busybox/usr/sbin/svlogd -tt ${BASEDIR}/var/log/${service}/
 
 EOI
-    chmod +x ${BASEDIR}/var/lib/${service}
-    chmod +x ${BASEDIR}/var/lib/${service}_child
+    chmod +x ${BASEDIR}/var/cron/${service}
+    chmod +x ${BASEDIR}/var/cron/${service}_child
   )
 done
 
@@ -83,7 +83,7 @@ ct_tuls="$(
   crontab -l | ${BASEDIR}/3rdparty/busybox/usr/bin/awk '/^#TULS_BEGIN/ {flag=1} /^#TULS_END/ {flag=0} !flag {print}' | grep -v "#TULS_END"
 
   printf "#TULS_BEGIN\n"
-  printf "TULS_SRVDIR=${BASEDIR}/var/lib/\n"
+  printf "TULS_SRVDIR=${BASEDIR}/var/cron/\n"
   for service in $services; do
     (
       TULS_BASEDIR=${BASEDIR}
