@@ -1,11 +1,21 @@
 <!doctype html>
 <html>
   <head>
+    <meta charset="utf-8">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/main.css">
     <title>TULS (TSD userland services)</title>
   </head>
   <body>
+    <div class="navbar navbar-dark bg-dark box-shadow">
+      <div class="container d-flex flex-column flex-md-row justify-content-between">
+        <div></div>
+        <div class="my-2 my-md-0 mr-md-3 vcenter">
+          <div class="d-inline text-white font-weight-bold">Service Status:</div> 
+          <div id="divSrvStatus" class="d-inline"></div>
+        </div>
+      </div>
+    </div>
     <div class="container">
       <div class="card-deck">
         <div class="col-md-3 mt-4">
@@ -22,8 +32,8 @@
         </div>
         <div class="col-md-3 mt-4">
           <script language="JavaScript">
-            document.write(`<a target="_blank" class="card h-100 bg-light" href="http://${window.location.hostname}:3000">`);
-          </script>
+            document.write(
+          `<a target="_blank" class="card h-100 bg-light" href="http://${window.location.hostname}:3000">
             <div class="img-asp">
               <img src="img/gitea.png" class="card-img-top object-fit" alt="...">
             </div>
@@ -32,9 +42,58 @@
               <p class="card-text">Web-based code hosting service using Git.</p>
               <p class="card-text"><small class="text-muted"></small></p>
             </div>
-          </a>
+          </a>`);
+          </script>
         </div>
       </div>
     </div>
+    <script>
+      const update_interval_msec = 5000;
+  
+      async function getData(url) {
+        const response = await fetch(url, {
+          method: 'GET'
+        });
+        return response.json();
+      }
+  
+      function getStatusClass(str) {
+        if (str == "running") return "status-running";
+        if (str == "stopped") return "status-stopped-ok";
+        if (str.startsWith('error')) return "status-stopped-error"; 	
+        return "status-unknown";
+      }
+  
+      async function update() {
+        const stat_json = await getData('./srvstat/get_status_json.cgi');
+        // clear table
+        if (stat_json.length == 0) {
+          return;
+        }
+        var divSrvStatus = document.querySelector('#divSrvStatus');
+        divSrvStatus.innerHTML = '';
+  
+        stat_json.forEach(e => {
+          var a = document.createElement("a");
+          const clstr = `${getStatusClass(e['status'])}`;
+          a.classList.add("status");
+          a.classList.add(clstr);
+          a.classList.add("ttip");
+          var s = document.createElement("span");
+          s.classList.add("tooltiptext");
+          s.innerHTML = `${e['name']}: ${e['status']}`;
+          a.appendChild(s);
+          a.href = "./srvstat/";
+          divSrvStatus.appendChild(a);
+        });
+      }
+  
+      async function doStuff() {
+        update();
+        setInterval(update, update_interval_msec);
+      }
+      
+      doStuff();
+    </script>
   </body>
 </html>
