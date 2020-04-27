@@ -19,28 +19,37 @@ get_status() {
     return 0
   fi
   if [ -f ${BASEDIR}/var/exit/${service}/exit_code ]; then
-    exit_code=$(cat ${BASEDIR}/var/exit/${service}/exit_code)
-    case "$exit_code" in
-      "0")
-        echo "stopped"
-        ;;
-      *)
-        printf "error_%s\n" "$exit_code"
-        ;;
-    esac
+    echo "stopped"
     return 0
   fi
   echo "unknown"
 }
 
+
+get_status_code() {
+  local service=$1
+  pid_fn=${BASEDIR}/run/pids/${service}
+  if [ -f "$pid_fn" ] && ${BASEDIR}/3rdparty/busybox/bin/kill -0 $(cat $pid_fn) 2>/dev/null; then
+    echo "NA"
+    return 0
+  fi
+  if [ -f ${BASEDIR}/var/exit/${service}/exit_code ]; then
+    exit_code=$(cat ${BASEDIR}/var/exit/${service}/exit_code)
+    echo "$exit_code"
+    return 0
+  fi
+  echo "NA"
+}
+
 printf "name\t"
 printf "status\t"
+printf "status_code\t"
 printf "started\t"
 printf "finished\n"
 for service in $services; do
   printf "%s\t" "$service"
-  status=$(get_status $service )
-  printf "%s\t" "$status"
+  printf "%s\t" "$(get_status $service )"
+  printf "%s\t" "$(get_status_code $service )"
   pid_fn=${BASEDIR}/run/pids/${service}
   started=$([ -f $pid_fn ] && ${BASEDIR}/3rdparty/busybox/bin/date -Iseconds -r $pid_fn || printf "NA")
   printf "%s\t" "$started"

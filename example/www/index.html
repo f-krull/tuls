@@ -62,11 +62,18 @@
         return response.json();
       }
   
-      function getStatusClass(str) {
+      function getStatusClass(str, code) {
         if (str == "running") return "status-running";
+        if (str == "stopped" && code != 0) return "status-stopped-error"; 	
         if (str == "stopped") return "status-stopped-ok";
-        if (str.startsWith('error')) return "status-stopped-error"; 	
         return "status-unknown";
+      }
+
+      function getStatusStr(str, code) {
+        if (str == "running") return "running";
+        if (str == "stopped" && code != 0) return `error (${code})`; 	
+        if (str == "stopped") return "stopped";
+        return "unknown";
       }
   
       async function update() {
@@ -80,13 +87,13 @@
   
         stat_json.forEach(e => {
           var a = document.createElement("a");
-          const clstr = `${getStatusClass(e['status'])}`;
+          const clstr = `${getStatusClass(e['status'], e['status_code'])}`;
           a.classList.add("status");
           a.classList.add(clstr);
           a.classList.add("ttip");
           var s = document.createElement("span");
           s.classList.add("tooltiptext");
-          s.innerHTML = `${e['name']}: ${e['status']}`;
+          s.innerHTML = `${e['name']}: ${getStatusStr(e['status'], e['status_code'])}`;
           a.appendChild(s);
           a.href = "./srvstat/";
           divSrvStatus.appendChild(a);

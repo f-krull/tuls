@@ -34,10 +34,10 @@
       return response.json();
     }
 
-    function getStatusClass(str) {
+    function getStatusClass(str, code) {
       if (str == "running") return "status-running";
+      if (str == "stopped"  && code != 0) return "status-stopped-err"; 	
       if (str == "stopped") return "status-stopped-ok";
-      if (str.startsWith('error')) return "status-stopped-err"; 	
       //"&#x1F7E5"
       return "status-unknown";
     }
@@ -71,7 +71,7 @@
         // icon
         var td = document.createElement("td");
         var div = document.createElement("div");
-        const ststr = `${getStatusClass(e['status'])}`;
+        const ststr = `${getStatusClass(e['status'], e['status_code'])}`;
         div.classList.add(ststr);
         td.appendChild(div);
         tr.appendChild(td);
