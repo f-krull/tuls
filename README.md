@@ -58,7 +58,7 @@
   
 ### Gitea
   * Edit `opt/gitea/custom/conf/app.ini` to change gitea settings.
-  * Replace the symlinks `opt/gitea/custom/public` and `opt/gitea/custom/templates` to directories conatining your customized files.
+  * Replace the symlink `opt/gitea/custom` to a directory containing your customized files.
 
 ### Backup (rsnapshot)
   * tbd.

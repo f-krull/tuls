@@ -9,16 +9,13 @@ export GITEA_BASEDIR
 all: install
 	
 .PHONY: install
-install: $(GITEABIN) custom/conf/app.ini custom/public custom/templates
+install: $(GITEABIN) custom custom/conf/app.ini
 
-custom/conf/app.ini:
+custom/conf/app.ini: custom
 	mkdir -p custom/conf/ && envsubst < config.txt > custom/conf/app.ini
 
-custom/templates: 
-	cd custom && ln -s ../custom_example/templates
-
-custom/public: 
-	cd custom && ln -s ../custom_example/public
+custom: 
+	ln -s custom_example custom
 
 .PHONY: run
 run: 
