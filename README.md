@@ -65,8 +65,8 @@
   * Replace the symlink `opt/gitea/custom` to a directory containing your customized files.
 
 ### Backup (rsnapshot)
-  * edit user.conf and set snapshot_root and backup entries
-  * make sure the directory snapshot_root already exists (mkdir ... if not)
+  * edit `user.conf` and set `snapshot_root `and `backup` entries
+  * make sure the directory `snapshot_root` already exists and is writable (mkdir ... if not)
 
 ## Folder structure
   * `./bin/` TULS bins
