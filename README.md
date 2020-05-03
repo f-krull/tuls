@@ -45,7 +45,11 @@
     Replace `./services` with a symlink to your custom folder 
     containg your own `*.service` files.
   * Run `bin/update` after configuring services.
-  * Any services should run in foreground and write log stdout or stderr
+  * Any services should 
+    * run in foreground
+    * write any log info stdout or stderr
+    * exit with 0 on success
+    * exit with != 0 on error
 
 ### Webserver (lighttpd)
 
@@ -61,7 +65,8 @@
   * Replace the symlink `opt/gitea/custom` to a directory containing your customized files.
 
 ### Backup (rsnapshot)
-  * tbd.
+  * edit `user.conf` and set `snapshot_root `and `backup` entries
+  * make sure the directory `snapshot_root` already exists and is writable (mkdir ... if not)
 
 ## Folder structure
   * `./bin/` TULS bins
@@ -84,6 +89,5 @@
   * wget
 
 ## TODO
-  * entry page beautification
   * rnsapshot example service and webui?
   * busybox: use INSTALL_NO_USR config
