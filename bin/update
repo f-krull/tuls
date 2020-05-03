@@ -68,8 +68,10 @@ export TULS_PATH=${BASEDIR}/3rdparty/busybox/bin/:${BASEDIR}/3rdparty/busybox/sb
     echo \$BASHPID > \$pid_fn   # some subshell was created by now
     $EXECSTART
   } 2>&1
-  # write exit code
-  echo \$? > ${BASEDIR}/var/exit/${service}/exit_code
+  status_code=\$?
+  started=\$( ${BASEDIR}/3rdparty/busybox/bin/date -Iseconds -r \$pid_fn )
+  # write exit status
+  printf "%s\t%s\n" "\$status_code" "\$started" > ${BASEDIR}/var/exit/${service}/exit_code
 } | ${BASEDIR}/3rdparty/busybox/usr/sbin/svlogd -tt ${BASEDIR}/var/log/${service}/
 
 EOI
