@@ -29,7 +29,7 @@
   * Edit configs (ports, etc.). See below for specific details
   * Auto-start services (default: webserver, gitea, status monitoring)  
     `bin/update`
-  * Go to `http://[HOST]:[PORT]` (default: http://localhost:8080)  
+  * Go to `http://<HOST>:<PORT>` (default: http://localhost:8080)  
     
 #### uninstall
   * Disable auto-start  
@@ -61,8 +61,8 @@
     Replace `./var/www` with a symlink to your custom folder.
   
 ### Gitea
-  * Edit `opt/gitea/custom/conf/app.ini` to change gitea settings.
   * Replace the symlink `opt/gitea/custom` to a directory containing your customized files.
+  * Edit `opt/gitea/custom/conf/app.ini` to change gitea settings.
 
 ### Backup (rsnapshot)
   * edit `user.conf` and set `snapshot_root `and `backup` entries
@@ -76,13 +76,14 @@
   * `./var/` Variable files; files that will change over time
   * `./var/exit/` Exit codes of services 
   * `./var/log/` Log files of services
-  * `./var/www` Symlink to wwww folder hosted by webserver
+  * `./var/www` Symlink to www folder hosted by webserver
 
 ## Requirements
   * bash
   * build tools (make, gcc, ...)
-  * git? (gitea)
+  * gettext (provides envsubst used opt/gitea/Makefile; could be bypassed)
   * rsync (backup)
+  * zlib (git, lighttpd)
 
 ### prepare_offline
   * make
@@ -91,3 +92,22 @@
 ## TODO
   * rnsapshot example service and webui?
   * busybox: use INSTALL_NO_USR config
+
+## Test / Docker
+
+Place the source of tuls into `/tmp/tuls`.
+
+docker run --rm -ti -p 8080:8080 -p 3000:3000 -v /tmp/:/tuls_src ubuntu:14.04 bash -c "
+cd /tmp
+cp -rp /tuls_src/tuls .
+cd tuls
+apt-get update && apt-get install -y wget build-essential zlib1g-dev gettext-base rsync
+make example -j 5
+# some workarouds to make it run in docker / as root
+export USER=$(whoami)
+bin/update
+# cron 
+nohub var/cron/webserver &
+nohub var/cron/gitea & 
+bash
+"
