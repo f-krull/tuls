@@ -6,6 +6,7 @@ _add: all
 modules := 
 
 include make_busybox.mk
+include make_git.mk
 include make_lighttpd.mk
 
 all: $(addsuffix _build, $(modules))
