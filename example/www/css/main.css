@@ -65,13 +65,14 @@ a.card {
 /* Tooltip text */
 .ttip .tooltiptext {
   visibility: hidden;
-  min-width: 120px;
-  max-width: 220px;
+  min-width: 160px;
+  max-width: 420px;
   background-color: #555;
   color: #fff;
   text-align: center;
   padding: 5px;
   border-radius: 6px;
+  font-size: small;
 
   /* Position the tooltip text */
   position: absolute;

@@ -75,6 +75,19 @@
         if (str == "stopped") return "stopped";
         return "unknown";
       }
+
+      function getTimeStr(e) {
+        const isRunning = e['status'] == "running";
+        var dateStr = (() => {
+          const str = isRunning ? e["started"] : e["finished"];
+          const date = new Date(str);
+          if (isNaN(date)) {
+            return "NA";
+          }
+          return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+        })();
+        return ` ${isRunning ? "started" : "finished"}: ${dateStr}`;
+      }
   
       async function update() {
         const stat_json = await getData('./srvstat/get_status_json.cgi');
@@ -93,7 +106,7 @@
           a.classList.add("ttip");
           var s = document.createElement("span");
           s.classList.add("tooltiptext");
-          s.innerHTML = `${e['name']}: ${getStatusStr(e['status'], e['status_code'])}`;
+          s.innerHTML = `${e['name']}<br>status: ${getStatusStr(e['status'], e['status_code'])}<br>${getTimeStr(e)}`;
           a.appendChild(s);
           a.href = "./srvstat/";
           divSrvStatus.appendChild(a);
