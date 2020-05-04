@@ -1,5 +1,5 @@
 # command to run
-EXECSTART="make -C ${TULS_BASEDIR}/opt/gitea run"
+EXECSTART="make -C ${TULS_BASEDIR}/opt/gitea run PATH=${TULS_BASEDIR}/3rdparty/git/bin"
 
 ## when to start service; used for crontab
 TIMER="* * * * *"
