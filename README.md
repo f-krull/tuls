@@ -97,6 +97,7 @@
 
 Place the source of tuls into `/tmp/tuls`.
 
+```
 docker run --rm -ti -p 8080:8080 -p 3000:3000 -v /tmp/:/tuls_src ubuntu:14.04 bash -c "
 cd /tmp
 cp -rp /tuls_src/tuls .
@@ -111,3 +112,4 @@ nohub var/cron/webserver &
 nohub var/cron/gitea & 
 bash
 "
+```
