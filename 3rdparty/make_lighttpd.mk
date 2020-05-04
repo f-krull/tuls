@@ -27,7 +27,7 @@ lighttpd/sbin/lighttpd: download/lighttpd-${LIBVER_lighttpd}.tar.gz
 		&& cd lighttpd_build \
 		&& tar xf ../download/lighttpd-${LIBVER_lighttpd}.tar.gz \
 		&& cd lighttpd-$(LIBVER_lighttpd) \
-		&& ./configure --prefix=$(BASEDIR)/lighttpd --without-bzip2
+		&& ./configure --prefix=$(BASEDIR)/lighttpd --without-bzip2 --without-pcre
 	$(MAKE) -C lighttpd_build/lighttpd-$(LIBVER_lighttpd)
 	$(MAKE) -C lighttpd_build/lighttpd-$(LIBVER_lighttpd) install
 	$(RM) -r lighttpd_build
