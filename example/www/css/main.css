@@ -69,10 +69,9 @@ a.card {
   max-width: 420px;
   background-color: #555;
   color: #fff;
-  text-align: center;
-  padding: 5px;
   border-radius: 6px;
   font-size: small;
+  text-align: left;
 
   /* Position the tooltip text */
   position: absolute;
@@ -84,6 +83,15 @@ a.card {
   /* Fade in tooltip */
   opacity: 0;
   transition: opacity 0.3s;
+}
+
+.ttip .tooltiptext td {
+  padding-left: 5px;
+}
+
+.ttip .tooltiptext th {
+  padding-left: 5px;
+  text-align: center;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */

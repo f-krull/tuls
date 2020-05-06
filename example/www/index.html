@@ -76,17 +76,31 @@
         return "unknown";
       }
 
-      function getTimeStr(e) {
-        const isRunning = e['status'] == "running";
-        var dateStr = (() => {
-          const str = isRunning ? e["started"] : e["finished"];
-          const date = new Date(str);
-          if (isNaN(date)) {
-            return "NA";
-          }
-          return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
-        })();
-        return ` ${isRunning ? "started" : "finished"}: ${dateStr}`;
+      function getDateTime(str) {
+        const date = new Date(str);
+        if (isNaN(date)) {
+          return [];
+        }
+        return [date.toLocaleDateString(), date.toLocaleTimeString()];
+      }
+
+      function addHeader(table, str, colspan) {
+        var tr = document.createElement('tr');
+        var td = document.createElement('th');
+        td.colSpan = 2;
+        td.innerHTML = str;
+        tr.appendChild(td);
+        table.appendChild(tr);
+      }
+
+      function addRow(table, strs) {
+        var tr = document.createElement('tr');
+        strs.forEach( e => {
+          var td = document.createElement('td');
+          td.innerHTML = e;
+          tr.appendChild(td);
+        });
+        table.appendChild(tr);
       }
   
       async function update() {
@@ -104,9 +118,23 @@
           a.classList.add("status");
           a.classList.add(clstr);
           a.classList.add("ttip");
-          var s = document.createElement("span");
+          var s = document.createElement("table");
           s.classList.add("tooltiptext");
-          s.innerHTML = `${e['name']}<br>status: ${getStatusStr(e['status'], e['status_code'])}<br>${getTimeStr(e)}`;
+
+          addHeader(s, e['name'], 2);
+          addRow(s, ["status", getStatusStr(e['status'], e['status_code'])]);
+          const started = getDateTime(e['started']);
+          if (started.length > 1) {
+            addRow(s, ["started", started[0]]);
+            addRow(s, ["", started[1]]);
+          }
+          const finished = getDateTime(e['finished']);
+          if (finished.length > 1) {
+            addRow(s, ["finished", finished[0]]);
+            addRow(s, ["", finished[1]]);
+          }
+
+          //s.innerHTML = `${e['name']}<br>status: ${getStatusStr(e['status'], e['status_code'])}<br>${getTimeStr(e)}`;
           a.appendChild(s);
           a.href = "./srvstat/";
           divSrvStatus.appendChild(a);
