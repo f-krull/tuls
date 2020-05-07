@@ -61,6 +61,7 @@ trap "rm \$pid_fn" INT TERM EXIT
 
 rm -f ${BASEDIR}/var/log/${service}/lock
 ${BASEDIR}/bin/rotate ${BASEDIR}/var/exit/${service}/exit_code
+started=\$( ${BASEDIR}/3rdparty/busybox/bin/date -Iseconds -r \$pid_fn )
 export TULS_BASEDIR=${BASEDIR}
 export TULS_PATH=${BASEDIR}/3rdparty/busybox/bin/:${BASEDIR}/3rdparty/busybox/sbin/:${BASEDIR}/3rdparty/busybox/usr/bin/:${BASEDIR}/3rdparty/busybox/usr/sbin/
 {
@@ -69,7 +70,6 @@ export TULS_PATH=${BASEDIR}/3rdparty/busybox/bin/:${BASEDIR}/3rdparty/busybox/sb
     $EXECSTART
   } 2>&1
   status_code=\$?
-  started=\$( ${BASEDIR}/3rdparty/busybox/bin/date -Iseconds -r \$pid_fn )
   # write exit status
   printf "%s\t%s\n" "\$status_code" "\$started" > ${BASEDIR}/var/exit/${service}/exit_code
 } | ${BASEDIR}/3rdparty/busybox/usr/sbin/svlogd -tt ${BASEDIR}/var/log/${service}/
