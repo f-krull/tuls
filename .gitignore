@@ -3,6 +3,9 @@
 !3rdparty/make_*.mk
 !3rdparty/bootstrap
 
+etc/*
+!etc/.keep
+
 var/*
 !var/.keep
 run

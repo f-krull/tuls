@@ -29,7 +29,10 @@ distclean:
 
 
 .PHONY: example
-example: 3rdparty services var/www opt css
+example: 3rdparty services etc/lighttpd.conf var/www opt css
+
+etc/lighttpd.conf:
+	ln -s ../example/etc/lighttpd.conf etc/lighttpd.conf
 
 services:
 	ln -s example/services services
