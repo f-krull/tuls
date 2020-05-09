@@ -31,14 +31,12 @@ distclean:
 .PHONY: example
 example: 3rdparty services etc/lighttpd.conf var/www opt css
 
-etc/lighttpd.conf:
-	ln -s ../example/etc/lighttpd.conf etc/lighttpd.conf
-
 services:
 	ln -s example/services services
-
+etc/lighttpd.conf:
+	ln -s ../example/etc/lighttpd.conf etc/lighttpd.conf
 var/www:
-	cd var && ln -s ../example/www www
+	ln -s ../example/www var/www
 
 .PHONY: css
 css: example/www/css/bootstrap.min.css example/www/css/bootstrap.min.css.map
