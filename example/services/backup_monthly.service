@@ -1,0 +1,17 @@
+# monthly backup - every first sunday
+EXECSTART="test \$(date +\%d) -ge 7 || make -C ${TULS_BASEDIR}/opt/backup monthly"
+
+## when to start service; used for crontab
+# every sunday at 2 am
+TIMER="0 2 * * 7"
+
+## nice - set CPU priority
+# high: -n 0
+# low:  -n 19
+NICE="-n 19"
+
+## ionice - set IO priority
+# Best-effort high: -c 2 -n 0
+# Best-effort low:  -c 2 -n 7
+# Idle: -c 3
+IONICE="-c 3"
