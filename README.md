@@ -58,11 +58,19 @@ Tools to run services inside TSD without root.
     Replace `./services` with a symlink to your custom folder 
     containg your own `*.service` files.
   * Run `bin/update` after configuring services.
-  * Any services should 
+
+#### Adding a new service  
+
+  * Place a new file into `./services/`
+  * A service program should:
     * run in foreground
     * write any log info stdout or stderr
     * exit with 0 on success
     * exit with != 0 on error
+  * Run `bin/update`
+  * Check the status with `bin/status` or the webpage
+
+Note: Services can use the `TULS_BASEDIR` env variable.
 
 ### Webserver (lighttpd)
 
