@@ -36,7 +36,7 @@ for service in $services; do
     cat > ${BASEDIR}/var/cron/${service} << EOI
 #!/usr/bin/env bash
 
-nice $NICE ionice $IONICE ${BASEDIR}/var/cron/${service}_child
+${BASEDIR}/3rdparty/busybox/bin/nice $NICE ${BASEDIR}/3rdparty/busybox/bin/ionice $IONICE ${BASEDIR}/var/cron/${service}_child
 EOI
   # write child wrappter
   cat > ${BASEDIR}/var/cron/${service}_child << EOI
