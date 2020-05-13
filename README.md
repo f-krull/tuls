@@ -1,5 +1,18 @@
 # TSD userland services
 
+Tools to run services inside TSD without root. 
+
+  * [Goals](#goals)
+  * [Quick start](#quick-start)
+  * [Configuration](#configuration)
+    * [Services](#services)
+    * [Webserver](#webserver-lighttpd)
+    * [Gitea](#gitea)
+    * [Backup](#backup-rsnapshot)
+  * [Requirements](#requirements)
+  * [Folder structure](#folder-structure)
+  * [For developers](#for-developers)
+
 ## Goals 
   * starting services (currently a wrapper for crontab - use systemd in the future?)
     * make sure no service runs more than once
@@ -45,11 +58,19 @@
     Replace `./services` with a symlink to your custom folder 
     containg your own `*.service` files.
   * Run `bin/update` after configuring services.
-  * Any services should 
+
+#### Adding a new service  
+
+  * Place a new file into `./services/`
+  * A service program should:
     * run in foreground
     * write any log info stdout or stderr
     * exit with 0 on success
     * exit with != 0 on error
+  * Run `bin/update`
+  * Check the status with `bin/status` or the webpage
+
+Note: Services can use the `TULS_BASEDIR` env variable.
 
 ### Webserver (lighttpd)
 
@@ -89,11 +110,15 @@
   * make
   * wget
 
-## TODO
-  * rnsapshot example service and webui?
+## For developers
+
+### TODO
+  * rnsapshot webui for config and restore (minimal ftp server)?
   * busybox: use INSTALL_NO_USR config
 
-## Test / Docker
+### Test build using docker
+
+Instructions to try out tuls with an old ubuntu base system.
 
 Place the source of tuls into `/tmp/tuls`.
 
