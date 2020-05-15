@@ -122,19 +122,19 @@ Instructions to try out tuls with an old ubuntu base system.
 
 Place the source of tuls into `/tmp/tuls`.
 
+
 ```
-docker run --rm -ti -p 8080:8080 -p 3000:3000 -v /tmp/:/tuls_src ubuntu:14.04 bash -c '
-cd /tmp
-cp -rp /tuls_src/tuls .
-cd tuls
-apt-get update && apt-get install -y wget build-essential zlib1g-dev gettext-base rsync
+docker run --rm -ti -p 8080:8080 -p 3000:3000 -v /tmp/:/tuls_src centos:centos7 /bin/bash -c "
+cp -rp /tuls_src/tuls /tmp/
+cd /tmp/tuls
+yum -y update && yum install -y wget bzip2 zlib-devel gettext rsync gcc gcc-c++ make cronie
 make example -j 5
 # some workarouds to make it run in docker / as root
 export USER=$(whoami)
-bin/update
+bin/update -y
 # cron 
-nohub var/cron/webserver &
-nohub var/cron/gitea & 
+nohup var/cron/webserver &
+nohup var/cron/gitea & 
 bash
-'
+"
 ```
