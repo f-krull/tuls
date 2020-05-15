@@ -98,7 +98,7 @@ ct_tuls="$(
 
 printf "new crontab:\n"
 printf -- "---------------------------------------------------\n"
-printf "$ct_tuls\n"
+echo "$ct_tuls"
 printf -- "---------------------------------------------------\n\n"
 
 if [ ${NON_INTERACTIVE} -eq 0 ]; then
@@ -109,7 +109,7 @@ else
 fi
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-  printf "$ct_tuls\n" | crontab -
+  echo "$ct_tuls" | crontab -
   echo "contab written"
 else 
   echo "aborting"
