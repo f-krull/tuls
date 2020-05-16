@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# remove all tuls servicse from crontab
+# remove all tuls services from crontab
 
 set -ETeuo pipefail
 

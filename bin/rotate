@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# mini logrotate - moves all file.X -> file.X+1
+# mini logrotate - moves all file.X -> file.X+1 ; X in [1:8]
 
 set -ETeuo pipefail
 

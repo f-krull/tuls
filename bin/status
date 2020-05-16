@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# update crontab
+# show service status
 
 set -ETeuo pipefail
 
@@ -23,10 +23,11 @@ for service in $services; do
   finished="NA"
 
   pid_fn=${BASEDIR}/run/pids/${service}
+  pid_inf=( $( [ -f "$pid_fn" ] && cat ${pid_fn} || echo "" ) )
   ec_fn=${BASEDIR}/var/exit/${service}/exit_code
-  if [ -f "$pid_fn" ] && ${BASEDIR}/3rdparty/busybox/bin/kill -0 $(cat $pid_fn) 2>/dev/null; then
+  if [ ${#pid_inf[@]} -gt 0 ] && ${BASEDIR}/3rdparty/busybox/bin/kill -0 ${pid_inf[0]} 2>/dev/null; then
     status="running"
-    started=$( ${BASEDIR}/3rdparty/busybox/bin/date -Iseconds -r $pid_fn )
+    started=${pid_inf[1]}
   elif [ -f ${ec_fn} ]; then
     status="stopped"
     finished=$( ${BASEDIR}/3rdparty/busybox/bin/date -Iseconds -r $ec_fn )

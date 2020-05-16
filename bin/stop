@@ -17,16 +17,18 @@ kill_all() {
   for service in $services; do
     pid_fn=${BASEDIR}/run/pids/${service}
     [ -f $pid_fn ] || continue
-    echo "kill -$sign $(cat $pid_fn) ($service)" 
-    ${BASEDIR}/3rdparty/busybox/usr/bin/pkill -$sign -P $(cat $pid_fn) 2>/dev/null || true
+    pid_inf=( $(cat $pid_fn) )
+    echo "kill -$sign ${pid_inf[0]} ($service)" 
+    ${BASEDIR}/3rdparty/busybox/usr/bin/pkill -$sign -P ${pid_inf[0]} 2>/dev/null || true
   done
 }
 
 is_any_alive() {
   for service in $services; do
     pid_fn=${BASEDIR}/run/pids/${service}
-    if [ -f "$pid_fn" ] && ${BASEDIR}/3rdparty/busybox/bin/kill -0 $(cat $pid_fn) 2>/dev/null; then
-      echo "waiting for $(cat $pid_fn) ($service)"
+    pid_inf=( $( [ -f "$pid_fn" ] && cat ${pid_fn} || echo "" ) )
+    if [ ${#pid_inf[@]} -gt 0 ] && ${BASEDIR}/3rdparty/busybox/bin/kill -0 ${pid_inf[0]} 2>/dev/null; then
+      echo "waiting for ${pid_inf[0]} ($service)"
       return 0
     fi
   done

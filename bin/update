@@ -38,12 +38,26 @@ for service in $services; do
 
 ${BASEDIR}/3rdparty/busybox/bin/nice $NICE ${BASEDIR}/3rdparty/busybox/bin/ionice $IONICE ${BASEDIR}/var/cron/${service}_child
 EOI
-  # write child wrappter
-  cat > ${BASEDIR}/var/cron/${service}_child << EOI
+    # write child wrapper
+    cat > ${BASEDIR}/var/cron/${service}_child << EOI
 #!/usr/bin/env bash
+
 
 # make sure service is runing only once
 pid_fn=${BASEDIR}/run/pids/${service}
+started=\$( ${BASEDIR}/3rdparty/busybox/bin/date -Iseconds )
+
+write_pid() {
+  local pid=\$1
+  local started=\$2
+  printf "%s\t%s\n" "\$pid" "\$started" > \$pid_fn
+}
+
+is_running() {
+  [ -f "\$pid_fn" ] || return 1
+  pid_inf=( \$(cat \$pid_fn) )
+  kill -0 \${pid_inf[0]} 2>/dev/null
+}
 
 # create run dir
 if [ ! -e ${BASEDIR}/run ]; then
@@ -51,22 +65,24 @@ if [ ! -e ${BASEDIR}/run ]; then
   ln -sfn /tmp/tuls_run_${USER} ${BASEDIR}/run
   mkdir -p ${BASEDIR}/run/pids
 fi
-if [ -f "\$pid_fn" ] && kill -0 \$(cat \$pid_fn) 2>/dev/null; then
-  printf "\$0: already running (\"\${pid_fn}\")\n" >&2; exit 0;
+echo test running
+if is_running; then
+  printf "\$0: already running (\"\${pid_fn}\")\n" >&2
+  exit 0
 fi
-echo \$BASHPID > \$pid_fn
+
+write_pid \$BASHPID \$started
 
 # cleanup on exit
 trap "rm \$pid_fn" INT TERM EXIT
 
 rm -f ${BASEDIR}/var/log/${service}/lock
 ${BASEDIR}/bin/rotate ${BASEDIR}/var/exit/${service}/exit_code
-started=\$( ${BASEDIR}/3rdparty/busybox/bin/date -Iseconds -r \$pid_fn )
 export TULS_BASEDIR=${BASEDIR}
 export TULS_PATH=${BASEDIR}/3rdparty/busybox/bin/:${BASEDIR}/3rdparty/busybox/sbin/:${BASEDIR}/3rdparty/busybox/usr/bin/:${BASEDIR}/3rdparty/busybox/usr/sbin/
 {
   {
-    echo \$BASHPID > \$pid_fn   # some subshell was created by now
+    write_pid \$BASHPID \$started   # some subshell was created by now
     $EXECSTART
   } 2>&1
   status_code=\$?
