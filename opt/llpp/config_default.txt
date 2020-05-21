@@ -1,0 +1,12 @@
+# To change settings: 
+# Create a new file "config.txt" and override any of the variables below
+
+# DB connection info
+DBHOST="localhost"
+DBPORT="9512"
+DBUSER="llpprw"
+DBNAME="llppdb"
+
+# DBMS
+DBDATADIR="db/data"
+DBLOGFILE="db/logs/log.txt"
