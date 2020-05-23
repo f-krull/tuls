@@ -1,7 +1,7 @@
 BASEDIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 .PHONY: _all
-_add: all
+_all: all
 
 modules := 
 

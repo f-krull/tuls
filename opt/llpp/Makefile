@@ -1,5 +1,8 @@
 BASEDIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
+TULS_BASEDIR ?= $(BASEDIR)/../../
+DOCROOT ?= $(BASEDIR)/www/
+
 include  config_default.txt
 -include config.txt
 
@@ -8,7 +11,7 @@ PHONY: prepare_offline
 prepare_offline:
 	make -C 3rdparty download
 
-all: | prepare_offline # 3rdparty
+all: | prepare_offline 3rdparty
 
 .PHONY: 3rdparty
 3rdparty:
@@ -41,7 +44,7 @@ dberase:
 
 .PHONY: run_webui
 run_webui: 3rdparty
-	PORT=$(PORT) 3rdparty/lighttpd/sbin/lighttpd -D -f lighttpd.conf
+	PORT=$(PORT)  DOCROOT=$(DOCROOT) TULS_BASEDIR=$(TULS_BASEDIR) LLPP_BASEDIR=$(BASEDIR) 3rdparty/lighttpd/sbin/lighttpd -D -f lighttpd.conf
 
 .PHONY: run_db
 run_db: ${DBDATADIR}/postgresql.conf
