@@ -116,12 +116,14 @@ Note: Services can use the `TULS_BASEDIR` env variable.
   * rnsapshot webui for config and restore (minimal ftp server)?
   * busybox: use INSTALL_NO_USR config
 
+### CircleCI test build
+![CircleCI](https://circleci.com/gh/LCBC-UiO/tuls/tree/circleci.svg?style=svg&circle-token=<put-circleci-status-api-token-here>)[https://app.circleci.com/pipelines/github/LCBC-UiO/tuls]
+
 ### Test build using docker
 
 Instructions to try out tuls with an old ubuntu base system.
 
 Place the source of tuls into `/tmp/tuls`.
-
 
 ```
 docker run --rm -ti -p 8080:8080 -p 3000:3000 -v /tmp/:/tuls_src centos:centos7 /bin/bash -c "
