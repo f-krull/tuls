@@ -117,7 +117,7 @@ Note: Services can use the `TULS_BASEDIR` env variable.
   * busybox: use INSTALL_NO_USR config
 
 ### CircleCI test build
-![CircleCI](https://circleci.com/gh/LCBC-UiO/tuls/tree/circleci.svg?style=svg&circle-token=<put-circleci-status-api-token-here>)[https://app.circleci.com/pipelines/github/LCBC-UiO/tuls]
+[![CircleCI](https://circleci.com/gh/LCBC-UiO/tuls/tree/circleci.svg?style=svg&circle-token=a0dd6bb1281027234ffb3d6246f024eef271c4b4)](https://app.circleci.com/pipelines/github/LCBC-UiO/tuls)
 
 ### Test build using docker
 
