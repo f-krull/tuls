@@ -1,6 +1,8 @@
 # TSD userland services
 
-Tools to run services inside TSD without root. 
+Tools to run services inside TSD without root.  
+
+[![CircleCI](https://circleci.com/gh/LCBC-UiO/tuls.svg?style=shield&circle-token=a0dd6bb1281027234ffb3d6246f024eef271c4b4)](https://app.circleci.com/pipelines/github/LCBC-UiO/tuls)
 
   * [Goals](#goals)
   * [Quick start](#quick-start)
@@ -115,9 +117,6 @@ Note: Services can use the `TULS_BASEDIR` env variable.
 ### TODO
   * rnsapshot webui for config and restore (minimal ftp server)?
   * busybox: use INSTALL_NO_USR config
-
-### CircleCI test build
-[![CircleCI](https://circleci.com/gh/LCBC-UiO/tuls.svg?style=shield&circle-token=a0dd6bb1281027234ffb3d6246f024eef271c4b4)](https://app.circleci.com/pipelines/github/LCBC-UiO/tuls)
 
 ### Test build using docker
 
