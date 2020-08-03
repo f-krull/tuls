@@ -27,6 +27,14 @@ busybox/bin/busybox: download/busybox-${LIBVER_busybox}.tar.bz2
 		&& cd busybox_build \
 		&& tar xf ../download/busybox-${LIBVER_busybox}.tar.bz2
 	$(MAKE) -C busybox_build/busybox-$(LIBVER_busybox) defconfig
+	# begin fixes for Centos6 - not needed for Centos7
+	sed -i "s/CONFIG_SYNC=.*/# CONFIG_SYNC is not set/" busybox_build/busybox-$(LIBVER_busybox)/.config
+	sed -i "s/CONFIG_FEATURE_SYNC_FANCY=.*/# CONFIG_FEATURE_SYNC_FANCY is not set/" busybox_build/busybox-$(LIBVER_busybox)/.config
+	sed -i "s/CONFIG_TOUCH=/# CONFIG_TOUCH is not set/" busybox_build/busybox-$(LIBVER_busybox)/.config
+	sed -i "s/CONFIG_FEATURE_TOUCH_NODEREF=.*/# CONFIG_FEATURE_TOUCH_NODEREF is not set/" busybox_build/busybox-$(LIBVER_busybox)/.config
+	sed -i "s/CONFIG_FEATURE_TOUCH_SUSV3=.*/# CONFIG_FEATURE_TOUCH_SUSV3 is not set/" busybox_build/busybox-$(LIBVER_busybox)/.config
+	sed -i "s/CONFIG_NSENTER=.*/# CONFIG_NSENTER is not set/" busybox_build/busybox-$(LIBVER_busybox)/.config
+	# end fixes for Centos6
 	# TSD might not have static libs install; But if possbitble append LDFLAGS="--static" below
 	$(MAKE) -C busybox_build/busybox-$(LIBVER_busybox) install CONFIG_PREFIX=$(BASEDIR)/busybox
 	$(RM) -r busybox_build
