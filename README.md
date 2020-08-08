@@ -132,9 +132,7 @@ make example -j 5
 # some workarouds to make it run in docker / as root
 export USER=$(whoami)
 bin/update -y
-# cron 
-nohup var/cron/webserver &
-nohup var/cron/gitea & 
+crond
 bash
 "
 ```
