@@ -1,6 +1,8 @@
 # TSD userland services
 
-Tools to run services inside TSD without root. 
+Tools to run services inside TSD without root.  
+
+[![CircleCI](https://circleci.com/gh/LCBC-UiO/tuls.svg?style=shield&circle-token=a0dd6bb1281027234ffb3d6246f024eef271c4b4)](https://app.circleci.com/pipelines/github/LCBC-UiO/tuls)
 
   * [Goals](#goals)
   * [Quick start](#quick-start)
@@ -121,7 +123,6 @@ Note: Services can use the `TULS_BASEDIR` env variable.
 Instructions to try out tuls with an old ubuntu base system.
 
 Place the source of tuls into `/tmp/tuls`.
-
 
 ```
 docker run --rm -ti -p 8080:8080 -p 3000:3000 -v /tmp/:/tuls_src centos:centos7 /bin/bash -c "
