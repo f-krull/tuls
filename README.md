@@ -24,9 +24,11 @@ Tools to run services inside TSD without root.
     * webserver
       * basic entry page 
       * monitoring of service status and logs
-      * easy install of simple webapps (cgi)
+      * easy install of simple webapps (CGIs)
     * gitea
-    * rsnapshot + webui
+  * additional services - disabled by default
+    * rsnapshot (+ webui?)
+    * full web service stack (LLPP: Linux, Lighttpd, PostgreSQL, PHP)
 
 ## Quick start
 
@@ -115,14 +117,18 @@ Note: Services can use the `TULS_BASEDIR` env variable.
 ## For developers
 
 ### TODO
-  * rnsapshot webui for config and restore (minimal ftp server)?
+  * config: symlink config files to one folder (see tuls_cfg_p23 repo)
+  * llpp: documentation, testing
+  * cleanup default services (rm sleep*)
+  * webui: show service config file in status overview
+  * add some webui for rnsapshot supporting config (?) and restore (minimal ftp server)?
   * busybox: use INSTALL_NO_USR config
 
 ### Test build using docker
 
-Instructions to try out tuls with an old ubuntu base system.
+Instructions to try out tuls with a centos7 base system.
 
-Place the source of tuls into `/tmp/tuls`.
+Clone the tuls repository into `/tmp/tuls`
 
 ```
 docker run --rm -ti -p 8080:8080 -p 3000:3000 -v /tmp/:/tuls_src centos:centos7 /bin/bash -c "
