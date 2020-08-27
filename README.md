@@ -119,7 +119,6 @@ Note: Services can use the `TULS_BASEDIR` env variable.
 ### TODO
   * config: symlink config files to one folder (see tuls_cfg_p23 repo)
   * llpp: documentation, testing
-  * cleanup default services (rm sleep*)
   * webui: show service config file in status overview
   * add some webui for rnsapshot supporting config (?) and restore (minimal ftp server)?
   * busybox: use INSTALL_NO_USR config
