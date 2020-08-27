@@ -21,7 +21,7 @@ shift $((OPTIND-1))
 
 services="$( 
   cd ${BASEDIR}/services 
-  ls * | grep ".service" | sed "s/.service//" 
+  ls * | grep ".service$" | sed "s/.service//"
 )"
 
 for service in $services; do
