@@ -38,7 +38,7 @@ else
 fi
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-  printf "$ct\n" | crontab -
+  echo "$ct" | crontab -
   echo "contab written"
 else 
   echo "aborting"
