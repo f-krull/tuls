@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-declare BASEDIR; BASEDIR="$( cd "${DOCUMENT_ROOT}/../.." && pwd )"
-
 # decode percent encoding ("%3C" -> ",", ...)
 decode_url() {
   echo "$1" | sed 's@+@ @g;s@%@\\x@g' | xargs -0 printf "%b"
@@ -22,4 +20,4 @@ if [[ ! "${PARAM_serviceid}" =~ ^[0-9A-Za-z_]*$ ]]; then
 fi
 
 
-cat ${BASEDIR}/var/log/${PARAM_serviceid}/current
+cat ${TULS_BASEDIR}/var/log/${PARAM_serviceid}/current

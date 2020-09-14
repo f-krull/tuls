@@ -4,9 +4,7 @@ printf "Content-Type: application/json\r\n\r\n"
 
 printf "[\n"
 
-declare BASEDIR; BASEDIR="$( cd "${DOCUMENT_ROOT}/../.." && pwd )"
-
-stat="$( $BASEDIR/bin/status )"
+stat="$( ${TULS_BASEDIR}/bin/status )"
 
 c=0
 while read name status status_code started finished _; do
