@@ -42,8 +42,8 @@ dberase:
 	3rdparty/postgresql/bin/pg_ctl -D ${DBDATADIR} stop || true
 	$(RM) -r ${DBDATADIR}
 
-.PHONY: run_webui
-run_webui: 3rdparty
+.PHONY: run_webserver
+run_webserver: 3rdparty
 	PORT=$(PORT)  DOCROOT=$(DOCROOT) TULS_BASEDIR=$(TULS_BASEDIR) LLPP_BASEDIR=$(BASEDIR) 3rdparty/lighttpd/sbin/lighttpd -D -f lighttpd.conf
 
 .PHONY: run_db
