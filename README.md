@@ -10,12 +10,8 @@ Setup services on a new TSD project in under 5 minutes. TULS:
 
 [![CircleCI](https://circleci.com/gh/LCBC-UiO/tuls.svg?style=shield&circle-token=a0dd6bb1281027234ffb3d6246f024eef271c4b4)](https://app.circleci.com/pipelines/github/LCBC-UiO/tuls)
 
-![Example 1](./example/doc/tuls_p33.png)
-![Example 2](./example/doc/tuls_p23.png)
-![Example 3](./example/doc/tuls_srvstat.png)
-![Example 4](./example/doc/tuls_crontab.png)
-
   * [Quick start](#quick-start)
+  * [Screenshots](#screenshots)
   * [Configuration](#configuration)
     * [Services](#services)
     * [Webserver](#webserver-lighttpd)
@@ -49,6 +45,28 @@ Setup services on a new TSD project in under 5 minutes. TULS:
     `bin/disable`
   * Stop services  
     `bin/stop`
+
+## Screenshots
+
+![Example 1](./example/doc/tuls_p33.png)  
+Entry page of webserver customized for p33. 
+
+---
+
+![Example 2](./example/doc/tuls_p23.png)  
+Entry page of webserver customized for p23. 
+
+---
+
+![Example 3](./example/doc/tuls_srvstat.png)  
+Status page for services.
+
+---
+
+![Example 4](./example/doc/tuls_crontab.png)  
+Management of crontab entries. The actual service definitions can be used version controls.
+
+---
 
 ## Configuration
 
