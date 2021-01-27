@@ -20,6 +20,7 @@
   </div>
   <div class="container mt-3">
     <span class="h1">Service status</span><span class="ml-3">updated: </span><span id="updatedOn"></span>
+    <p id="tulsPath" class="text-monospace"></p>
     <div class="mt-3">
       <table id="statusTable" class="table"><tr><th>please</th></tr><tr><td>wait</td></tr></table>
     </div>
@@ -106,6 +107,14 @@
       update();
       setInterval(update, update_interval_msec);
     }
+
+    (async function () {
+      const r = await fetch("./get_tulsdir_text.cgi", {
+        method: 'GET'
+      });
+      const p = await r.text();
+      document.getElementById("tulsPath").innerHTML = p;
+    })();
     
     doStuff();
   </script>
