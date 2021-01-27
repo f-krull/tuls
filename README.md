@@ -1,11 +1,17 @@
 # TSD userland services
 
-Tools to run services inside TSD without root.  
+Setup services on a new TSD project in under 5 minutes. TULS:
+  * runs services (by managing crontab) and keeps logs
+  * includes 
+    * a web server stack (Lighttpd, PostgreSQL, PHP)
+    * a Github-like web service (Gitea)
+    * a backup service (rsnapshot)
+  * does not require root
 
 [![CircleCI](https://circleci.com/gh/LCBC-UiO/tuls.svg?style=shield&circle-token=a0dd6bb1281027234ffb3d6246f024eef271c4b4)](https://app.circleci.com/pipelines/github/LCBC-UiO/tuls)
 
-  * [Goals](#goals)
   * [Quick start](#quick-start)
+  * [Screenshots](#screenshots)
   * [Configuration](#configuration)
     * [Services](#services)
     * [Webserver](#webserver-lighttpd)
@@ -13,22 +19,8 @@ Tools to run services inside TSD without root.
     * [Backup](#backup-rsnapshot)
   * [Requirements](#requirements)
   * [Folder structure](#folder-structure)
+  * [Goals](#goals)
   * [For developers](#for-developers)
-
-## Goals 
-  * starting services (currently a wrapper for crontab - use systemd in the future?)
-    * make sure no service runs more than once
-    * version control of service configuration
-    * write logs
-  * include basic services (services that are likely to be relevant for any TSD project)
-    * webserver
-      * basic entry page 
-      * monitoring of service status and logs
-      * easy install of simple webapps (CGIs)
-    * gitea
-  * additional services - disabled by default
-    * rsnapshot (+ webui?)
-    * full web service stack (LLPP: Linux, Lighttpd, PostgreSQL, PHP)
 
 ## Quick start
 
@@ -53,6 +45,28 @@ Tools to run services inside TSD without root.
     `bin/disable`
   * Stop services  
     `bin/stop`
+
+## Screenshots
+
+![Example 1](./example/doc/tuls_p33.png)  
+Entry page of webserver customized for p33. 
+
+---
+
+![Example 2](./example/doc/tuls_p23.png)  
+Entry page of webserver customized for p23. 
+
+---
+
+![Example 3](./example/doc/tuls_srvstat.png)  
+Status page for services.
+
+---
+
+![Example 4](./example/doc/tuls_crontab.png)  
+Management of crontab entries. The actual service definitions can be used version controls.
+
+---
 
 ## Configuration
 
@@ -115,6 +129,21 @@ Note: Services can use the `TULS_BASEDIR` env variable.
   * wget
 
 ## For developers
+
+## Goals 
+  * starting services (currently a wrapper for crontab - use systemd in the future?)
+    * make sure no service runs more than once
+    * version control of service configuration
+    * write logs
+  * include basic services (services that are likely to be relevant for any TSD project)
+    * webserver
+      * basic entry page 
+      * monitoring of service status and logs
+      * easy install of simple webapps (CGIs)
+    * gitea
+  * additional services - disabled by default
+    * rsnapshot (+ webui?)
+    * full web service stack (LLPP: Linux, Lighttpd, PostgreSQL, PHP)
 
 ### TODO
   * config: symlink config files to one folder (see tuls_cfg_p23 repo)
