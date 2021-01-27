@@ -64,6 +64,8 @@
         }
         th = document.createElement("th");
         tr.appendChild(th);
+        th = document.createElement("th");
+        tr.appendChild(th);
         table.appendChild(tr);
       }
       stat_json.forEach(e => {
@@ -80,10 +82,18 @@
           td.innerHTML = value;
           tr.appendChild(td);
         }
+        // log
         td = document.createElement("td");
         a = document.createElement("a");
         a.href = `./log.html?serviceid=${e['name']}`;
-        a.innerHTML = "view log";
+        a.innerHTML = "log";
+        td.appendChild(a);
+        tr.appendChild(td);
+        // cfg
+        td = document.createElement("td");
+        a = document.createElement("a");
+        a.href = `./srvcfg.html?serviceid=${e['name']}`;
+        a.innerHTML = "file";
         td.appendChild(a);
         tr.appendChild(td);
         table.appendChild(tr);

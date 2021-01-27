@@ -41,6 +41,18 @@
   position: relative;
 }
 
+.tulsconfigbox {
+  border: 2px solid var(--nqcol2);
+  border-radius: 8px;
+  background-color: var(--nqcol6);
+  padding: 16px;
+}
+.tulstextarea {
+  background-color: var(--nqcol3);
+  font-family: monospace;
+  min-height: 310px;
+}
+
 #codeLog {
   position: absolute;
   z-index: 1;
