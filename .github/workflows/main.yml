@@ -1,4 +1,4 @@
-name: Build and test for CentOS
+name: CentOS7
 
 on:
   push:
