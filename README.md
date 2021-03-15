@@ -8,7 +8,7 @@ Setup services on a new TSD project in under 5 minutes. TULS:
     * a backup service (rsnapshot)
   * does not require root
 
-[![Build and test for CentOS](https://github.com/f-krull/tuls/actions/workflows/main.yml/badge.svg)](https://github.com/f-krull/tuls/actions/workflows/main.yml)
+[![Build](https://github.com/f-krull/tuls/actions/workflows/main.yml/badge.svg)](https://github.com/f-krull/tuls/actions/workflows/main.yml)
 
   * [Quick start](#quick-start)
   * [Screenshots](#screenshots)
