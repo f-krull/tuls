@@ -8,7 +8,7 @@ Setup services on a new TSD project in under 5 minutes. TULS:
     * a backup service (rsnapshot)
   * does not require root
 
-[![CircleCI](https://circleci.com/gh/LCBC-UiO/tuls.svg?style=shield&circle-token=a0dd6bb1281027234ffb3d6246f024eef271c4b4)](https://app.circleci.com/pipelines/github/LCBC-UiO/tuls)
+[![Build](https://github.com/f-krull/tuls/actions/workflows/main.yml/badge.svg)](https://github.com/f-krull/tuls/actions/workflows/main.yml)
 
   * [Quick start](#quick-start)
   * [Screenshots](#screenshots)
