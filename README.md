@@ -8,7 +8,7 @@ Setup services on a new TSD project in under 5 minutes. TULS:
     * a backup service (rsnapshot)
   * does not require root
 
-[![Build](https://github.com/f-krull/tuls/actions/workflows/main.yml/badge.svg)](https://github.com/f-krull/tuls/actions/workflows/main.yml)
+[![Build](https://github.com/LCBC-UiO/tuls/actions/workflows/main.yml/badge.svg)](https://github.com/LCBC-UiO/tuls/actions/workflows/main.yml)
 
   * [Quick start](#quick-start)
   * [Screenshots](#screenshots)
@@ -148,26 +148,6 @@ Note: Services can use the `TULS_BASEDIR` env variable.
 ### TODO
   * config: symlink config files to one folder (see tuls_cfg_p23 repo)
   * llpp: documentation, testing
-  * webui: show service config file in status overview
   * add some webui for rnsapshot supporting config (?) and restore (minimal ftp server)?
   * busybox: use INSTALL_NO_USR config
 
-### Test build using docker
-
-Instructions to try out tuls with a centos7 base system.
-
-Clone the tuls repository into `/tmp/tuls`
-
-```
-docker run --rm -ti -p 8080:8080 -p 3000:3000 -v /tmp/:/tuls_src centos:centos7 /bin/bash -c "
-cp -rp /tuls_src/tuls /tmp/
-cd /tmp/tuls
-yum -y update && yum install -y wget bzip2 zlib-devel gettext rsync gcc gcc-c++ make cronie
-make example -j 5
-# some workarouds to make it run in docker / as root
-export USER=$(whoami)
-bin/update -y
-crond
-bash
-"
-```
