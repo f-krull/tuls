@@ -1,0 +1,33 @@
+name: CentOS8
+
+on:
+  push:
+    branches: [ master, fk_dev ]
+  pull_request:
+    branches: [ master, fk_dev ]
+
+jobs:
+
+  container:
+    runs-on: ubuntu-latest
+    container: centos:centos8
+    env:
+      USER: root
+    steps:
+    - uses: actions/checkout@v2
+    - name: test
+      run: pwd && id
+    - name: install deps
+      run: yum -y update && yum -y install git wget rsync which gettext bzip2 zlib-devel perl gcc gcc-c++ make cronie
+    - name: build
+      run: make prepare_offline && make example
+    - name: prepare run
+      run: /sbin/crond
+    - name: install services
+      run: bin/update -y
+    - name: test services
+      run: |
+        crontab -l
+        sleep 60
+        ps faux
+        wget --spider --recursive -l 1 http://localhost:8080 --no-verbose
