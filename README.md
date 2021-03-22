@@ -8,7 +8,8 @@ Setup services on a new TSD project in under 5 minutes. TULS:
     * a backup service (rsnapshot)
   * does not require root
 
-[![Build](https://github.com/LCBC-UiO/tuls/actions/workflows/main.yml/badge.svg)](https://github.com/LCBC-UiO/tuls/actions/workflows/main.yml)
+[![Build CentOS7](https://github.com/LCBC-UiO/tuls/actions/workflows/centos7.yml/badge.svg)](https://github.com/LCBC-UiO/tuls/actions/workflows/centos7.yml)
+[![Build CentOS8](https://github.com/LCBC-UiO/tuls/actions/workflows/centos8.yml/badge.svg)](https://github.com/LCBC-UiO/tuls/actions/workflows/centos8.yml)
 
   * [Quick start](#quick-start)
   * [Screenshots](#screenshots)
