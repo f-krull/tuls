@@ -1,7 +1,7 @@
 modules := $(modules) \
 	busybox
 
-LIBVER_busybox := 1.31.1
+LIBVER_busybox := 1.33.0
 
 .PHONY: busybox_download
 busybox_download: download/busybox-${LIBVER_busybox}.tar.bz2
