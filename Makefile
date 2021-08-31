@@ -29,20 +29,13 @@ distclean:
 
 
 .PHONY: example
-example: 3rdparty services etc/lighttpd.conf var/www opt css
-
-services:
-	ln -s example/services services
-etc/lighttpd.conf:
-	ln -s ../example/etc/lighttpd.conf etc/lighttpd.conf
-var/www:
-	ln -s ../example/www var/www
+example: 3rdparty services opt css
 
 .PHONY: css
-css: example/www/css/bootstrap.min.css example/www/css/bootstrap.min.css.map
+css: example/tuls_config//www/css/bootstrap.min.css example/tuls_config//www/css/bootstrap.min.css.map
 
-example/www/css/bootstrap.min.css:
-	cat 3rdparty/bootstrap/bootstrap.min.css.gz | gunzip > example/www/css/bootstrap.min.css
+example/tuls_config//www/css/bootstrap.min.css:
+	cat 3rdparty/bootstrap/bootstrap.min.css.gz | gunzip > example/tuls_config//www/css/bootstrap.min.css
 
-example/www/css/bootstrap.min.css.map:
-	cat 3rdparty/bootstrap/bootstrap.min.css.map.gz | gunzip > example/www/css/bootstrap.min.css.map
+example/tuls_config//www/css/bootstrap.min.css.map:
+	cat 3rdparty/bootstrap/bootstrap.min.css.map.gz | gunzip > example/tuls_config//www/css/bootstrap.min.css.map

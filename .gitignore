@@ -3,7 +3,8 @@
 !3rdparty/make_*.mk
 !3rdparty/bootstrap
 etc/lighttpd.conf
-example/www/css/bootstrap.min.css*
+example/tuls_config/www/css/bootstrap.min.css*
+example/tuls_config/gitea/conf/*
 run
 services
 var/cron/*
