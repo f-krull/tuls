@@ -1,6 +1,6 @@
 BASEDIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-all: 3rdparty
+all: 3rdparty config opt css
 
 prepare_offline:
 	$(MAKE) -C 3rdparty download
@@ -26,10 +26,6 @@ distclean:
 	$(RM) -r var/log/*
 	$(RM) -r var/exit/*
 	$(RM) run/pids/*
-
-
-.PHONY: example
-example: 3rdparty config opt css
 
 config:
 	ln -s example/tuls_config config
