@@ -1,6 +1,5 @@
 data/*
 log/*
-custom
 gitea-*-linux-amd64
 gitea-repositories/
-custom_example/conf/app.ini
+
