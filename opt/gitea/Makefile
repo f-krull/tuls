@@ -14,9 +14,6 @@ install: $(GITEABIN) custom custom/conf/app.ini
 custom/conf/app.ini: custom
 	mkdir -p custom/conf/ && envsubst < config.txt > custom/conf/app.ini
 
-custom: 
-	ln -s custom_example custom
-
 .PHONY: run
 run: 
 	./$(GITEABIN) web 

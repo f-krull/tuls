@@ -29,7 +29,10 @@ distclean:
 
 
 .PHONY: example
-example: 3rdparty services opt css
+example: 3rdparty config opt css
+
+config:
+	ln -s example/tuls_config config
 
 .PHONY: css
 css: example/tuls_config//www/css/bootstrap.min.css example/tuls_config//www/css/bootstrap.min.css.map
