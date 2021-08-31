@@ -1,0 +1,18 @@
+# command to run
+EXECSTART="make -C ${TULS_BASEDIR}/opt/gitea run PATH=${TULS_BASEDIR}/3rdparty/git/bin:$PATH"
+
+## when to start service; used for crontab
+TIMER="* * * * *"
+
+## nice - set CPU priority
+# high: -n 0
+# low:  -n 19
+NICE="-n 0"
+
+## ionice - set IO priority
+# Best-effort high: -c 2 -n 0
+# Best-effort low:  -c 2 -n 7
+# Idle: -c 3
+IONICE="-c 2 -n 3"
+
+
