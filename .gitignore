@@ -9,6 +9,5 @@ run
 var/cron/*
 var/exit/*
 var/log/*
-var/www
 config
 
