@@ -4,7 +4,7 @@
 !3rdparty/bootstrap
 etc/lighttpd.conf
 example/tuls_config/www/css/bootstrap.min.css*
-example/tuls_config/gitea/conf/*
+example/tuls_config/gitea/custom/*
 run
 services
 var/cron/*
