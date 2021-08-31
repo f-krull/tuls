@@ -35,7 +35,7 @@ Setup services on a new TSD project in under 5 minutes. TULS:
 ### inside TSD
   * `cd tuls...`
   * Build software and set up example services  
-    `make example`  
+    `make`  
   * Edit configs (ports, etc.). See below for specific details
   * Auto-start services (default: webserver, gitea, status monitoring)  
     `bin/update`
@@ -73,40 +73,41 @@ Management of crontab entries. The actual service definitions can be used versio
 
 ### Services
 
-  * By default `./services` is a symlink to `example/services`. 
-    Replace `./services` with a symlink to your custom folder 
-    containg your own `*.service` files.
+  * Edit files in `./config/services` or add your own `*.service` files.
   * Run `bin/update` after configuring services.
 
 #### Adding a new service  
 
-  * Place a new file into `./services/`
+  * Place a new file into `./config/services/`
   * A service program should:
     * run in foreground
     * write any log info stdout or stderr
     * exit with 0 on success
     * exit with != 0 on error
   * Run `bin/update`
-  * Check the status with `bin/status` or the webpage
+  * Check the status with either running `bin/status` or opening the webpage
 
 Note: Services can use the `TULS_BASEDIR` env variable.
 
 ### Webserver (lighttpd)
 
 #### change port
-  * Change the port (default 8080) defined in the `EXECSTART` entry of the webserver `.service` file (default `services/webserver.service`)
+  * Change the port (default 8080) defined in the `EXECSTART` entry of the webserver's `.service` file (`./config/services/webserver.service`)
 
 #### custom html and cgi files 
-  * By default `./var/www` is a symlink to `example/www`. 
-    Replace `./var/www` with a symlink to your custom folder.
+  * Edit files in `./config/www`.
   
 ### Gitea
-  * Replace the symlink `opt/gitea/custom` to a directory containing your customized files.
-  * Edit `opt/gitea/custom/conf/app.ini` to change gitea settings.
+  * Edit `./config/gitea/custom/conf/app.ini` to change gitea settings.
 
 ### Backup (rsnapshot)
   * edit `user.conf` and set `snapshot_root `and `backup` entries
   * make sure the directory `snapshot_root` already exists and is writable (mkdir ... if not)
+
+### General 
+
+To have all custom configurations in separate folder, make a copy of `example/tuls_config/` and
+update the symlink `config` in the root directory. 
 
 ## Folder structure
   * `./bin/` TULS bins
@@ -147,7 +148,6 @@ Note: Services can use the `TULS_BASEDIR` env variable.
     * full web service stack (LLPP: Linux, Lighttpd, PostgreSQL, PHP)
 
 ### TODO
-  * config: symlink config files to one folder (see tuls_cfg_p23 repo)
   * llpp: documentation, testing
   * add some webui for rnsapshot supporting config (?) and restore (minimal ftp server)?
   * busybox: use INSTALL_NO_USR config
