@@ -33,6 +33,32 @@ for service in $services; do
     # prepare status
     mkdir -p ${BASEDIR}/var/exit/${service}/
     # write parent wrapper
+
+    # rewrite nice
+    case "${NICE:0:1}" in 
+      [hH] ) 
+        NICE="-n 0"
+        ;;
+      [mM] ) 
+        NICE="-n 5"
+        ;;
+      [lL] ) 
+        NICE="-n 19"
+        ;;
+    esac
+    # rewrite ionice
+    case "${IONICE:0:1}" in 
+      [hH] ) 
+        IONICE="-c 2 -n 0"
+        ;;
+      [mM] ) 
+        IONICE="-c 2 -n 4"
+        ;;
+      [lL] ) 
+        IONICE="-c 3"
+        ;;
+    esac
+
     cat > ${BASEDIR}/var/cron/${service} << EOI
 #!/usr/bin/env bash
 

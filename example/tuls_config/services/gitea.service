@@ -5,14 +5,11 @@ EXECSTART="make -C ${TULS_BASEDIR}/opt/gitea run PATH=${TULS_BASEDIR}/3rdparty/g
 TIMER="* * * * *"
 
 ## nice - set CPU priority
-# high: -n 0
-# low:  -n 19
-NICE="-n 0"
+# low/high/medium
+NICE="medium"
 
 ## ionice - set IO priority
-# Best-effort high: -c 2 -n 0
-# Best-effort low:  -c 2 -n 7
-# Idle: -c 3
-IONICE="-c 2 -n 3"
+# low/high/medium
+IONICE="medium"
 
 
