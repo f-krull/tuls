@@ -13,7 +13,7 @@ prepare_offline:
 	$(MAKE) -C 3rdparty all
 
 .PHONY: opt
-opt:
+opt: config
 	$(MAKE) -C opt/gitea
 	$(MAKE) -C opt/backup install
 

@@ -9,9 +9,9 @@ export GITEA_BASEDIR
 all: install
 	
 .PHONY: install
-install: $(GITEABIN) custom custom/conf/app.ini
+install: $(GITEABIN) custom/conf/app.ini
 
-custom/conf/app.ini: custom
+custom/conf/app.ini: 
 	mkdir -p custom/conf/ && envsubst < config.txt > custom/conf/app.ini
 
 .PHONY: run
