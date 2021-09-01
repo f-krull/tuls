@@ -20,7 +20,7 @@ jobs:
     - name: install deps
       run: yum -y update && yum -y install git wget rsync which gettext bzip2 zlib-devel perl gcc gcc-c++ make cronie
     - name: build
-      run: make prepare_offline && make example
+      run: make prepare_offline && make
     - name: prepare run
       run: /sbin/crond
     - name: install services
